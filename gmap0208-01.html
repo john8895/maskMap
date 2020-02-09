@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+    //口罩剩餘數量API
+    // https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json
+    var data = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012203",
+                    "name": "博荃藥局",
+                    "phone": "02 -27316736",
+                    "address": "台北市松山區敦化北路4巷51號",
+                    "mask_adult": 66,
+                    "mask_child": 42,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
+                    "note": "如遇國定連續假期,藥局公休",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.544742,
+                        25.050063
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012383",
+                    "name": "德川中西藥局",
+                    "phone": "02 -27683399",
+                    "address": "台北市松山區八德路4段96號",
+                    "mask_adult": 204,
+                    "mask_child": 54,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午休診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午休診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上休診、星期日晚上休診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.56066,
+                        25.04836
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012409",
+                    "name": "家音藥局",
+                    "phone": "02 -37652080",
+                    "address": "台北市松山區民生東路5段73號",
+                    "mask_adult": 0,
+                    "mask_child": 0,
+                    "updated": "",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "早上9:00到晚上11:00",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.558489,
+                        25.058709
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012454",
+                    "name": "敦北藥局",
+                    "phone": "02 -27155691",
+                    "address": "台北市松山區民生東路4段80巷5號",
+                    "mask_adult": 50,
+                    "mask_child": 40,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.553125,
+                        25.057129
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012490",
+                    "name": "中美藥局",
+                    "phone": "02 -27627468",
+                    "address": "台北市松山區富錦街531號",
+                    "mask_adult": 2,
+                    "mask_child": 0,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "營業時間如有異動,以藥局公告為準",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.565481,
+                        25.061285
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012507",
+                    "name": "康麗藥局",
+                    "phone": "02 -27174117",
+                    "address": "台北市松山區南京東路3段303巷20號",
+                    "mask_adult": 0,
+                    "mask_child": 8,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
+                    "note": "春節營業時間請電洽",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.546826,
+                        25.05369
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012516",
+                    "name": "惠登藥局",
+                    "phone": "02 -25472432",
+                    "address": "台北市松山區民生東路3段130巷34號",
+                    "mask_adult": 106,
+                    "mask_child": 38,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.546113,
+                        25.056198
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012561",
+                    "name": "松田藥局",
+                    "phone": "02 -25798005",
+                    "address": "台北市松山區延吉街9－6號",
+                    "mask_adult": 0,
+                    "mask_child": 6,
+                    "updated": "2020\/02\/08 15:26:36",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.55355,
+                        25.047007
+                    ]
+                }
+            }
+        ]
+    };
+
+    function initMap() {
+        //25.053144, 121.544704
+        var myLatLng = {lat: 25.053144, lng: 121.544704};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: myLatLng
+
+
+        });
+
+        for (var i = 0; i < data.features.length; i++) {
+            var str = {};
+            var place = {};
+            place.lat = data.features[i].geometry.coordinates[1];
+            place.lng = data.features[i].geometry.coordinates[0];
+
+            str.position = place;
+            str.map = map;
+            str.title = data.features[i].properties.name;
+            // str.icon = 'bot.png';
+            var marker = new google.maps.Marker(str);
+            console.log(str);
+        }
+        // var marker = new google.maps.Marker({
+        //     position: {lat: 25.052279, lng: 121.545895},
+        //     map: map,
+        //     title: '7-ELEVEN 生活門市'
+        // });
+
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&callback=initMap"
+        async defer></script>
+</body>
+</html>
