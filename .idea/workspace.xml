@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/14.閉包.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/John_maskMap.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI img/banner_announce_fix.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI img/banner_announce_fix@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maskMap2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-json.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmap0208-01.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmap0208-01.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/口罩地圖 功能規劃.md" beforeDir="false" afterPath="$PROJECT_DIR$/口罩地圖 功能規劃.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/14.閉包.html" beforeDir="false" afterPath="$PROJECT_DIR$/14.閉包.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maskMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,12 +57,12 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="maskMap2.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maskMap/maskMap2.html" useBuiltInWebServerPort="true">
+    <configuration name="maskMap.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maskMap/maskMap.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JavaScript Debug.maskMap2.html" />
+        <item itemvalue="JavaScript Debug.maskMap.html" />
       </list>
     </recent_temporary>
   </component>
@@ -85,7 +76,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581229571918</updated>
-      <workItem from="1581229573063" duration="14889000" />
+      <workItem from="1581229573063" duration="16802000" />
     </task>
     <servers />
   </component>
