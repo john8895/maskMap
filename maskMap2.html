@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
     <style>
         #map {
             height: 100%;
@@ -15,15 +13,68 @@
             margin: 0;
             padding: 0;
         }
+
+        .marker-cluster-small {
+            background-color: rgba(181, 226, 140, 0.6);
+        }
+
+        .marker-cluster-small div {
+            background-color: rgba(110, 204, 57, 0.6);
+        }
+
+        .marker-cluster-medium {
+            background-color: rgba(241, 211, 87, 0.6);
+        }
+
+        .marker-cluster-medium div {
+            background-color: rgba(240, 194, 12, 0.6);
+        }
+
+        .marker-cluster-large {
+            background-color: rgba(253, 156, 115, 0.6);
+        }
+
+        .marker-cluster-large div {
+            background-color: rgba(241, 128, 23, 0.6);
+        }
+
+        .marker-cluster {
+            background-clip: padding-box;
+            border-radius: 20px;
+        }
+
+        .marker-cluster div {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 5px;
+
+            text-align: center;
+            border-radius: 15px;
+            font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .marker-cluster span {
+            line-height: 30px;
+        }
     </style>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 </head>
 <body>
 <div id="map"></div>
 
 <script>
-    //口罩剩餘數量API
-    // https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json
-    var data = {
+    var dataJson = {
         "type": "FeatureCollection",
         "features": [
             {
@@ -33,9 +84,9 @@
                     "name": "博荃藥局",
                     "phone": "02 -27316736",
                     "address": "台北市松山區敦化北路4巷51號",
-                    "mask_adult": 66,
-                    "mask_child": 42,
-                    "updated": "2020\/02\/08 15:26:36",
+                    "mask_adult": 0,
+                    "mask_child": 30,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
                     "note": "如遇國定連續假期,藥局公休",
                     "custom_note": "",
@@ -56,9 +107,9 @@
                     "name": "德川中西藥局",
                     "phone": "02 -27683399",
                     "address": "台北市松山區八德路4段96號",
-                    "mask_adult": 204,
-                    "mask_child": 54,
-                    "updated": "2020\/02\/08 15:26:36",
+                    "mask_adult": 2,
+                    "mask_child": 46,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午休診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午休診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上休診、星期日晚上休診",
                     "note": "",
                     "custom_note": "",
@@ -79,9 +130,9 @@
                     "name": "家音藥局",
                     "phone": "02 -37652080",
                     "address": "台北市松山區民生東路5段73號",
-                    "mask_adult": 0,
-                    "mask_child": 0,
-                    "updated": "",
+                    "mask_adult": 196,
+                    "mask_child": 51,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
                     "note": "早上9:00到晚上11:00",
                     "custom_note": "",
@@ -102,9 +153,9 @@
                     "name": "敦北藥局",
                     "phone": "02 -27155691",
                     "address": "台北市松山區民生東路4段80巷5號",
-                    "mask_adult": 50,
-                    "mask_child": 40,
-                    "updated": "2020\/02\/08 15:26:36",
+                    "mask_adult": 0,
+                    "mask_child": 6,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
                     "note": "",
                     "custom_note": "",
@@ -125,9 +176,9 @@
                     "name": "中美藥局",
                     "phone": "02 -27627468",
                     "address": "台北市松山區富錦街531號",
-                    "mask_adult": 2,
-                    "mask_child": 0,
-                    "updated": "2020\/02\/08 15:26:36",
+                    "mask_adult": 0,
+                    "mask_child": 13,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
                     "note": "營業時間如有異動,以藥局公告為準",
                     "custom_note": "",
@@ -149,8 +200,8 @@
                     "phone": "02 -27174117",
                     "address": "台北市松山區南京東路3段303巷20號",
                     "mask_adult": 0,
-                    "mask_child": 8,
-                    "updated": "2020\/02\/08 15:26:36",
+                    "mask_child": 6,
+                    "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
                     "note": "春節營業時間請電洽",
                     "custom_note": "",
@@ -163,87 +214,65 @@
                         25.05369
                     ]
                 }
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "id": "5901012516",
-                    "name": "惠登藥局",
-                    "phone": "02 -25472432",
-                    "address": "台北市松山區民生東路3段130巷34號",
-                    "mask_adult": 106,
-                    "mask_child": 38,
-                    "updated": "2020\/02\/08 15:26:36",
-                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
-                    "note": "",
-                    "custom_note": "",
-                    "website": ""
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        121.546113,
-                        25.056198
-                    ]
-                }
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "id": "5901012561",
-                    "name": "松田藥局",
-                    "phone": "02 -25798005",
-                    "address": "台北市松山區延吉街9－6號",
-                    "mask_adult": 0,
-                    "mask_child": 6,
-                    "updated": "2020\/02\/08 15:26:36",
-                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
-                    "note": "",
-                    "custom_note": "",
-                    "website": ""
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        121.55355,
-                        25.047007
-                    ]
-                }
             }
         ]
     };
+    var data = dataJson.features;
+    var map = L.map('map', {
+        center: [25.053144, 121.544704],
+        zoom: 18
+    });
 
-    function initMap() {
-        //25.053144, 121.544704
-        var myLatLng = {lat: 25.053144, lng: 121.544704};
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 16,
-            center: myLatLng
-        });
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        accessToken: 'pk.eyJ1Ijoiam9objg4OTUiLCJhIjoiY2s2ZjBpbnRlMDQxNTNlbXQzcGRmd3g0ZSJ9.CZhZ2p1dMuFgIPard8rqwg'
+    }).addTo(map);
 
-        for (var i = 0; i < data.features.length; i++) {
-            var str = {};
-            var place = {};
-            place.lat = data.features[i].geometry.coordinates[1];
-            place.lng = data.features[i].geometry.coordinates[0];
+    var greenIcon = new L.Icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
 
-            str.position = place;
-            str.map = map;
-            str.title = data.features[i].properties.name;
-            // str.icon = 'bot.png';
-            var marker = new google.maps.Marker(str);
-            console.log(str);
+    // L.marker([25.061285, 121.565481], {icon: greenIcon}).addTo(map)
+    //     .bindPopup('<h1>測試藥局</h1><p>成人口罩：50<br>兒童口罩：50</p>');
+    //
+    // L.marker([25.050063, 121.544742]).addTo(map)
+    //     .bindPopup('<h1>測試藥局</h1><p>成人口罩：50<br>兒童口罩：50</p>');
+    //
+    // L.marker([25.04836, 121.56066]).addTo(map)
+    //     .bindPopup('<h1>測試藥局</h1><p>成人口罩：50<br>兒童口罩：50</p>');
+
+    var markers = new L.MarkerClusterGroup().addTo(map);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("get","https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
+    xhr.send();
+    xhr.onload = function () {
+        var data = JSON.parse(xhr.responseText).features;
+        for(let i=0;i<data.length;i++){
+            var lat = data[i].geometry.coordinates[1];
+            var lng = data[i].geometry.coordinates[0];
+            var name = data[i].properties.name;
+            markers.addLayer(L.marker([lat, lng], {icon: greenIcon}).bindPopup(name));
         }
-        // var marker = new google.maps.Marker({
-        //     position: {lat: 25.052279, lng: 121.545895},
-        //     map: map,
-        //     title: '7-ELEVEN 生活門市'
-        // });
-
+        map.addLayer(markers);
     }
 
+    // for (let i = 0; i < data.length; i++) {
+    //     var lat = data[i].geometry.coordinates[1];
+    //     var lng = data[i].geometry.coordinates[0];
+    //     var name = data[i].properties.name;
+    //     markers.addLayer(L.marker([lat, lng], {icon: greenIcon}).bindPopup(name));
+    // }
+
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&callback=initMap"
-        async defer></script>
+
 </body>
 </html>
