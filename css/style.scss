@@ -1,0 +1,135 @@
+@import 'mixins';
+
+html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote,
+pre, form, fieldset, table, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans TC";
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#map {
+  height: 100vh;
+  width: calc(100% - 360px);
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 300px;
+  float: left;
+  height: 100%;
+  background-color: #F7F7F7;
+  padding: 30px;
+}
+
+.sidebar__header {
+  h1 {
+  }
+
+  .sidebar__source {
+    color: grey;
+    font-size: 13px;
+    width: 110px;
+    em {
+      font-style: normal;
+    }
+    .sidebar__today {
+      display: block;
+    }
+  }
+
+  .banner {
+  }
+}
+
+main {
+  h2 {
+  }
+
+  .sidebar__store {
+    overflow-y: auto;
+    height: 100%;
+  }
+}
+
+.marker-cluster-small {
+  background-color: rgba(181, 226, 140, 0.6);
+
+  div {
+    background-color: rgba(110, 204, 57, 0.6);
+  }
+}
+
+.marker-cluster-medium {
+  background-color: rgba(241, 211, 87, 0.6);
+
+  div {
+    background-color: rgba(240, 194, 12, 0.6);
+  }
+}
+
+.marker-cluster-large {
+  background-color: rgba(253, 156, 115, 0.6);
+
+  div {
+    background-color: rgba(241, 128, 23, 0.6);
+  }
+}
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+
+  div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  }
+
+  span {
+    line-height: 30px;
+  }
+}
+
+//infoWindow
+.map__maskNum {
+  height: 30px;
+}
+
+.leaflet-popup-content h3 {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.map__maskNum {
+  div {
+    float: left;
+    font-size: 16px;
+    margin-right: 5px;
+
+    em {
+      font-style: normal;
+      font-size: 13px;
+    }
+
+    &:nth-of-type(1) {
+    }
+
+    &:nth-of-type(2) {
+    }
+  }
+}
