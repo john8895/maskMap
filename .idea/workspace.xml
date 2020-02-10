@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/14.閉包.html" beforeDir="false" afterPath="$PROJECT_DIR$/14.閉包.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maskMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,9 +24,15 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -44,18 +48,6 @@
       <recent name="D:\Github\maskMap" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="maskMap.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maskMap/maskMap.html" useBuiltInWebServerPort="true">
       <method v="2" />
@@ -65,6 +57,18 @@
         <item itemvalue="JavaScript Debug.maskMap.html" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -77,6 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1581229571918</updated>
       <workItem from="1581229573063" duration="16802000" />
+      <workItem from="1581294158168" duration="765000" />
     </task>
     <servers />
   </component>
@@ -88,7 +93,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -96,5 +103,55 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1899" height="95" key="GridCell.Tab.0.bottom" timestamp="1581294254858">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.0.bottom/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254858" />
+    <state width="1899" height="95" key="GridCell.Tab.0.center" timestamp="1581294254858">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.0.center/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254858" />
+    <state width="1899" height="95" key="GridCell.Tab.0.left" timestamp="1581294254858">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.0.left/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254858" />
+    <state width="1899" height="95" key="GridCell.Tab.0.right" timestamp="1581294254858">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.0.right/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254858" />
+    <state width="1899" height="95" key="GridCell.Tab.1.bottom" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.1.bottom/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.1.center" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.1.center/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.1.left" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.1.left/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.1.right" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.1.right/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.2.bottom" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.2.bottom/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.2.center" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.2.center/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.2.left" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.2.left/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
+    <state width="1899" height="95" key="GridCell.Tab.2.right" timestamp="1581294254859">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="95" key="GridCell.Tab.2.right/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581294254859" />
   </component>
 </project>
