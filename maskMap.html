@@ -269,7 +269,6 @@
     //
     //     }
     // }
-    var storeStr = null;
     for (let i = 0; i < data.length; i++) {
         var lat = data[i].geometry.coordinates[1];
         var lng = data[i].geometry.coordinates[0];
@@ -280,12 +279,12 @@
             continue;
         }
 
-        var storeStr = `<article>
+         var storeStr = `<article>
         <h4>${info.name}</h4>
             <ul>
                 <li>${info.address}</li>
                 <li>${info.phone}</li>
-                <li>今日營業時間：${info.available}</li>
+<!--                <li>今日營業時間：${info.available}</li>-->
             </ul>
         <div class="sidebar__maskNum">
             <div><em>成人</em> ${info.mask_adult}</div>
@@ -295,7 +294,7 @@
         </span>
         </div>
               </article>`;
-        my$('storeList').innerHTML = storeStr;
+        my$('storeList').innerHTML += storeStr;
 
 
         // info.name
