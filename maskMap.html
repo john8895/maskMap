@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
         #map {
             height: 100%;
+            width: 80%;
         }
 
         html, body {
@@ -13,7 +14,10 @@
             margin: 0;
             padding: 0;
         }
+        .map__wrapper {}
+        .sidebar {
 
+        }
         .marker-cluster-small {
             background-color: rgba(181, 226, 140, 0.6);
         }
@@ -57,6 +61,35 @@
         .marker-cluster span {
             line-height: 30px;
         }
+
+        /*infoWindow*/
+        .map__maskNum {
+            height: 30px;
+        }
+
+        .leaflet-popup-content h3 {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .map__maskNum div {
+            float: left;
+            font-size: 16px;
+            margin-right: 5px;
+        }
+
+        .map__maskNum div em {
+            font-style: normal;
+            font-size: 13px;
+        }
+
+        .map__maskNum div:nth-of-type(1) {
+
+        }
+
+        .map__maskNum div:nth-of-type(2) {
+
+        }
     </style>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
@@ -72,8 +105,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 </head>
 <body>
-<div id="map"></div>
+<div class="map__wrapper">
+    <div class="sidebar">
 
+    </div>
+    <div id="map"></div>
+</div>
 <script>
     var dataJson = {
         "type": "FeatureCollection",
@@ -86,7 +123,7 @@
                     "phone": "02 -27316736",
                     "address": "台北市松山區敦化北路4巷51號",
                     "mask_adult": 0,
-                    "mask_child": 30,
+                    "mask_child": 0,
                     "updated": "2020\/02\/09 14:36:40",
                     "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
                     "note": "如遇國定連續假期,藥局公休",
@@ -221,12 +258,12 @@
     var data = dataJson.features;
     var map = L.map('map', {
         center: [25.053144, 121.544704],
-        zoom: 18
+        zoom: 16
     });
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
+        maxZoom: 20,
         id: 'mapbox/streets-v11',
         accessToken: 'pk.eyJ1Ijoiam9objg4OTUiLCJhIjoiY2s2ZjBpbnRlMDQxNTNlbXQzcGRmd3g0ZSJ9.CZhZ2p1dMuFgIPard8rqwg'
     }).addTo(map);
@@ -282,6 +319,10 @@
         var lat = data[i].geometry.coordinates[1];
         var lng = data[i].geometry.coordinates[0];
         var info = data[i].properties;
+        // 如果口罩數量為0，則不顯示
+        if (info.mask_adult + info.mask_child === 0) {
+            continue;
+        }
         // info.phone
         // info.address
         // info.mask_adult
@@ -298,12 +339,12 @@
         //     判斷：
         //     有口罩：綠色、沒口罩：灰色
         //     當前位置：紅色圖示、店家點（綠色）
-            // infoWindow
-            // 店名、距離當前幾km
-            // 更新時間
-            // 口罩數量：成人 0、兒童 20
-            // 導航連結
-            // *標星號
+        // infoWindow
+        // 店名、距離當前幾km
+        // 更新時間 ----OK
+        // 口罩數量：成人 0、兒童 20 -----OK
+        // 導航連結
+        // *標星號
         // 側邊欄
         //     今天日期
         //     顯示字串：最後一碼…
@@ -332,7 +373,8 @@
         *
         *
         * */
-        markers.addLayer(L.marker([lat, lng], {icon: blueIcon}).bindPopup(info.name));
+        markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
+            .bindPopup("<h1>" + info.name + "</h1><em>" + info.updated + " 更新</em><div class='map__maskNum'><div><em>成人</em> " + info.mask_adult + "</div><div><em>兒童</em> " + info.mask_child + "</div></div>"));
     }
     map.addLayer(markers);
 </script>
