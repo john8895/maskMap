@@ -35,37 +35,22 @@
     </header>
     <main>
         <h2>尚有庫存店家</h2>
-        <div class="sidebar__store">
-            <article>
-                <h4>圈圈大藥局</h4>
-                <ul>
-                    <li>地址：新北市</li>
-                    <li>+886 2-2226 9636</li>
-                    <li>今日營業時間：9am-10pm</li>
-                </ul>
-                <div class="sidebar__maskNum">
-                    <div><em>成人</em> 0</div>
-                    <div><em>兒童</em> 0</div>
-                    <span class="sidebar__updateTime">
-                    2020/02/08 23:35更新
-                </span>
-                </div>
-            </article>
-            <article>
-                <h4>圈圈大藥局</h4>
-                <ul>
-                    <li>地址：新北市</li>
-                    <li>+886 2-2226 9636</li>
-                    <li>今日營業時間：9am-10pm</li>
-                </ul>
-                <div class="sidebar__maskNum">
-                    <div><em>成人</em> 0</div>
-                    <div><em>兒童</em> 0</div>
-                    <span class="sidebar__updateTime">
-                    2020/02/08 23:35更新
-                </span>
-                </div>
-            </article>
+        <div class="sidebar__store" id="storeList">
+<!--            <article>-->
+<!--                <h4>圈圈大藥局</h4>-->
+<!--                <ul>-->
+<!--                    <li>地址：新北市</li>-->
+<!--                    <li>+886 2-2226 9636</li>-->
+<!--                    <li>今日營業時間：9am-10pm</li>-->
+<!--                </ul>-->
+<!--                <div class="sidebar__maskNum">-->
+<!--                    <div><em>成人</em> 0</div>-->
+<!--                    <div><em>兒童</em> 0</div>-->
+<!--                    <span class="sidebar__updateTime">-->
+<!--                    2020/02/08 23:35更新-->
+<!--                </span>-->
+<!--                </div>-->
+<!--            </article>-->
         </div>
     </main>
 </aside>
@@ -75,6 +60,7 @@
     function my$(id) {
         return document.getElementById(id);
     }
+
     // 今天日期
     var Today = new Date();
     var TodayDate = Today.getFullYear()+" 年 "+(Today.getMonth()+1)+" 月 " + Today.getDate() + " 日";
@@ -230,8 +216,6 @@
         zoom: 16
     });
 
-
-
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 20,
@@ -285,16 +269,36 @@
     //
     //     }
     // }
-
+    var storeStr = null;
     for (let i = 0; i < data.length; i++) {
         var lat = data[i].geometry.coordinates[1];
         var lng = data[i].geometry.coordinates[0];
         var info = data[i].properties;
-
+//
         // 如果口罩數量為0，則不顯示
         if (info.mask_adult + info.mask_child === 0) {
             continue;
         }
+
+        var storeStr = `<article>
+        <h4>${info.name}</h4>
+            <ul>
+                <li>${info.address}</li>
+                <li>${info.phone}</li>
+                <li>今日營業時間：${info.available}</li>
+            </ul>
+        <div class="sidebar__maskNum">
+            <div><em>成人</em> ${info.mask_adult}</div>
+            <div><em>兒童</em> ${info.mask_child}</div>
+            <span class="sidebar__updateTime">
+            ${info.updated} 更新
+        </span>
+        </div>
+              </article>`;
+        my$('storeList').innerHTML = storeStr;
+
+
+        // info.name
         // info.phone
         // info.address
         // info.mask_adult
@@ -338,13 +342,6 @@
         //         存量最多：計算一定範圍內所有marker，口罩總數（成人+兒童）最多，取最大
         //         *已標星號
         //
-        //判斷
-        /*
-        * 所有口罩、成人、兒童
-        * 店家名稱、地址、電話
-        *
-        *
-        * */
         markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
             .bindPopup("<h1>" + info.name + "</h1><em>" + info.updated + " 更新</em><div class='map__maskNum'><div><em>成人</em> " + info.mask_adult + "</div><div><em>兒童</em> " + info.mask_child + "</div></div>"));
     }

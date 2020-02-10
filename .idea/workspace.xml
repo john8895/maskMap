@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/css/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/css/style.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maskMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/口罩地圖 功能規劃.md" beforeDir="false" afterPath="$PROJECT_DIR$/口罩地圖 功能規劃.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +78,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581229571918</updated>
-      <workItem from="1581229573063" duration="24067000" />
+      <workItem from="1581229573063" duration="25421000" />
     </task>
     <servers />
   </component>
