@@ -22,14 +22,18 @@ img {
   height: 100vh;
   width: calc(100% - 360px);
   overflow: hidden;
+  float: right;
 }
 
 .sidebar {
   width: 300px;
-  float: left;
   height: 100%;
   background-color: #F7F7F7;
   padding: 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .sidebar__header {
@@ -40,9 +44,11 @@ img {
     color: grey;
     font-size: 13px;
     width: 110px;
+
     em {
       font-style: normal;
     }
+
     .sidebar__today {
       display: block;
     }
@@ -52,14 +58,10 @@ img {
   }
 }
 
-main {
-  h2 {
-  }
 
-  .sidebar__store {
-    overflow-y: auto;
-    height: 100%;
-  }
+.sidebar__store {
+  overflow-y: auto;
+  max-height: 50vh;
 }
 
 .marker-cluster-small {
