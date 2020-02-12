@@ -25,14 +25,18 @@ img {
   height: 100vh;
   width: calc(100% - 360px);
   overflow: hidden;
+  float: right;
 }
 
 .sidebar {
   width: 300px;
-  float: left;
   height: 100%;
   background-color: #F7F7F7;
   padding: 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .sidebar__header .sidebar__source {
@@ -46,9 +50,9 @@ img {
 .sidebar__header .sidebar__source .sidebar__today {
   display: block;
 }
-main .sidebar__store {
+.sidebar__store {
   overflow-y: auto;
-  height: 100%;
+  max-height: 50vh;
 }
 
 .marker-cluster-small {
