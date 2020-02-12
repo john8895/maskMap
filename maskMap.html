@@ -98,7 +98,7 @@
 
     // 產生地圖
     function getMap() {
-        let dataJson = {
+        const dataJson = {
             "type": "FeatureCollection",
             "features": [
                 {
@@ -241,7 +241,7 @@
                 }
             ]
         };
-        let data = dataJson.features;
+        const data = dataJson.features;
         let map = L.map('map', {
             center: [25.053144, 121.544704],
             zoom: 16
@@ -350,12 +350,9 @@
             //     當前位置：紅色圖示、店家點（綠色）
             // infoWindow
             // 店名、距離當前幾km
-            // 更新時間 ----OK
-            // 口罩數量：成人 0、兒童 20 -----OK
             // 導航連結
             // *標星號
             // 側邊欄
-            //     今天日期
             //     顯示字串：最後一碼…
             //     當前位置：顯示地址
             //     輸入地址 查詢
@@ -370,7 +367,14 @@
             //     篩選
             //         所有口罩：預設顯示
             //         成人口罩：顯示成人口罩數量不等於 0 的店家
+            // 篩選口罩數量 2020.02.12
+            var filterAdultMask = data.filter(function(item, index, array){
+                return item.properties.mask_adult != 0;       // 成人口罩：顯示成人口罩數量不等於 0 的店家
+                // console.log(item.properties.mask_adult);
+            });
+            console.log(filterAdultMask);
             //         兒童口罩：顯示兒童口罩數量不等於 0 的店家
+            // info.mask_child !=0
             //         距離最近：離當前位置最近：取得一定範圍內所有marker，計算與當前位置之間的差距，取最小
             //         存量最多：計算一定範圍內所有marker，口罩總數（成人+兒童）最多，取最大
             //         *已標星號
