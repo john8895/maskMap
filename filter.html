@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // function isNegative(element, index, array) {
+    //     return element !== 0;
+    // }
+    //
+    // const int8 = new Int8Array([0, 20, 0, 40, -50]);
+    // const negInt8 = int8.filter(isNegative);
+    //
+    // console.log(negInt8);
+    // // expected output: Int8Array [-10, -30, -50]
+
+
+    // 相同的陣列
+    var people = [
+        {
+            name: 'Casper',
+            like: '鍋燒意麵',
+            age: 18
+        },
+        {
+            name: 'Wang',
+            like: '炒麵',
+            age: 24
+        },
+        {
+            name: 'Bobo',
+            like: '蘿蔔泥',
+            age: 1
+        },
+        {
+            name: '滷蛋',
+            like: '蘿蔔泥',
+            age: 3
+        }
+    ];
+
+    var filterEmpty = people.filter(function(item, index, array){
+    });
+    console.log(filterEmpty);    // 沒有條件，會是一個空陣列
+
+    var filterAgeThan5 = people.filter(function(item, index, array){
+        return item.age > 5;       // 取得大於五歲的
+    });
+    console.log(filterAgeThan5); // Casper, Wang 這兩個物件
+
+    var filterDouble = people.filter(function(item, index, array){
+        return index % 2 === 1;    // 取得陣列中雙數的物件
+    });
+    console.log(filterDouble);   // Wang, 滷蛋 這兩個物件
+</script>
+</body>
+</html>
