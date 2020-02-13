@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maskMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
     </list>
@@ -15,6 +16,7 @@
       <list>
         <option value="SCSS File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -87,7 +89,8 @@
       <workItem from="1581412808332" duration="589000" />
       <workItem from="1581466494994" duration="1773000" />
       <workItem from="1581482943137" duration="1387000" />
-      <workItem from="1581552905048" duration="1033000" />
+      <workItem from="1581552905048" duration="1259000" />
+      <workItem from="1581566576754" duration="2171000" />
     </task>
     <servers />
   </component>
