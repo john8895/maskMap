@@ -183,7 +183,9 @@ function btnShowMask() {
         }
     }
 }
+
 btnShowMask();
+
 // 篩選口罩數量 2020.02.12
 function updateStoreList(showMask) {
     console.log("updateStoreList");
@@ -192,8 +194,9 @@ function updateStoreList(showMask) {
     let str = "";
     // 所有口罩：預設顯示
     // 成人口罩：顯示成人口罩數量不等於 0 的店家
+    // 2020.02.13 編輯至此 ==============================================
     let filterMask = data.filter(function (item, index, array) {
-        if(showMask && showMask == 'adult'){
+        if (showMask && showMask == 'adult') {
             return item.properties.mask_adult;
         }
         // return item.properties.showMask !== 0;       // 成人口罩：顯示成人口罩數量不等於 0 的店家
