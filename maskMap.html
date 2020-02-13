@@ -22,11 +22,11 @@
         <div class="banner">
             <img src="http://fakeimg.pl/300x166" alt="">
         </div>
-        <div class="sidebar__nowLocation">
-            <h3>現在位置</h3>
-            <input type="text" value="" placeholder="現在位置">
-            <input type="button" value="搜尋">
-        </div>
+        <!--        <div class="sidebar__nowLocation">-->
+        <!--            <h3>現在位置</h3>-->
+        <!--            <input type="text" value="" placeholder="現在位置" onClick="codeAddress()" id="address" >-->
+        <!--            <input type="button" value="搜尋">-->
+        <!--        </div>-->
         <div class="sidebar__maskFilter" id="fliterMask">
             <input type="button" value="所有口罩" id="btn__allMask">
             <input type="button" value="成人口罩" id="btn__adultMask">
@@ -55,6 +55,7 @@
     </main>
 </aside>
 <div id="map"></div>
+<!--<script src="http://maps.google.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&sensor=false"></script>-->
 
 <script>
     const dataJson = {
@@ -204,8 +205,9 @@
     let showMask = "";
 
     getTodat();
-    getMap();
+    // getMap();
     updateStoreList('all');
+
     // const maskFilter = btnShowMask();
 
     function my$(id) {
@@ -220,30 +222,27 @@
     }
 
     // 成人、兒童口罩篩選
-    // function btnShowMask() {
-    let maskBtn = my$('fliterMask').getElementsByTagName('input');
-    for (let i = 0; i < maskBtn.length; i++) {
-        maskBtn[i].onclick = function () {
-            switch (maskBtn[i].id) {
-                case 'btn__adultMask':
-                    // console.log('adult');
-                    // showMask = "adult";
-                    updateStoreList('adult');
-                    break;
-                case 'btn__childMask':
-                    // showMask = "child";
-                    // console.log('child');
-                    updateStoreList('child');
-                    break;
-                default:
-                    // showMask = "all";
-                    // console.log('all');
-                    updateStoreList('all');
+    function btnShowMask() {
+        let maskBtn = my$('fliterMask').getElementsByTagName('input');
+        for (let i = 0; i < maskBtn.length; i++) {
+            maskBtn[i].onclick = function () {
+                switch (maskBtn[i].id) {
+                    case 'btn__adultMask':
+                        // showMask = "adult";
+                        updateStoreList('adult');
+                        break;
+                    case 'btn__childMask':
+                        // showMask = "child";
+                        updateStoreList('child');
+                        break;
+                    default:
+                        // showMask = "all";
+                        updateStoreList('all');
+                }
             }
         }
     }
-    // }
-
+    btnShowMask();
     // 篩選口罩數量 2020.02.12
     function updateStoreList(showMask) {
         // my$('storeList').innerHTML = "";
@@ -251,27 +250,24 @@
         let str = "";
         // 所有口罩：預設顯示
         // 成人口罩：顯示成人口罩數量不等於 0 的店家
-        let filterAdultMask = data.filter(function (item, index, array) {
+        let filterMask = data.filter(function (item, index, array) {
             return item.properties.showMask !== 0;       // 成人口罩：顯示成人口罩數量不等於 0 的店家
         });
-        // console.log(filterAdultMask);
-        // console.log(filterAdultMask);
         // 兒童口罩：顯示兒童口罩數量不等於 0 的店家
         // info.mask_child !=0
-        // 顯示藥局列表
-        for (let i = 0; i < filterAdultMask.length; i++) {
+        for (let i = 0; i < filterMask.length; i++) {
             let storeStr = `<article>
-        <h4>${filterAdultMask[i].properties.name}</h4>
+        <h4>${filterMask[i].properties.name}</h4>
             <ul>
-                <li>${filterAdultMask[i].properties.address}</li>
-                <li>${filterAdultMask[i].properties.phone}</li>
-<!--                <li>今日營業時間：${filterAdultMask[i].properties.available}</li>-->
+                <li>${filterMask[i].properties.address}</li>
+                <li>${filterMask[i].properties.phone}</li>
+<!--                <li>今日營業時間：${filterMask[i].properties.available}</li>-->
             </ul>
         <div class="sidebar__maskNum">
-            <div><em>成人</em> ${filterAdultMask[i].properties.mask_adult}</div>
-            <div><em>兒童</em> ${filterAdultMask[i].properties.mask_child}</div>
+            <div><em>成人</em> ${filterMask[i].properties.mask_adult}</div>
+            <div><em>兒童</em> ${filterMask[i].properties.mask_child}</div>
             <span class="sidebar__updateTime">
-            ${filterAdultMask[i].properties.updated} 更新
+            ${filterMask[i].properties.updated} 更新
         </span>
         </div>
               </article>`;
@@ -281,12 +277,21 @@
 
     }
 
+    // 偵測使用者定位，再產生地圖
+    navigator.geolocation.getCurrentPosition(getPosition);
+
+    function getPosition(position) {
+        let myLocation = [position.coords.latitude, position.coords.longitude];
+        getMap(myLocation);
+    }
+
     // 產生地圖
-    function getMap() {
+    function getMap(myLocation) {
         let map = L.map('map', {
             center: [25.053144, 121.544704],
             zoom: 16
         });
+
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 20,
@@ -319,9 +324,18 @@
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
+        let redIcon = new L.Icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
-        // L.marker([25.061285, 121.565481], {icon: greenIcon}).addTo(map)
-        //     .bindPopup('<h1>測試藥局</h1><p>成人口罩：50<br>兒童口罩：50</p>');
+        // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
+        //     .bindPopup('<h1>我的位置</h1>');
+
         // 群組 marker
         let markers = new L.MarkerClusterGroup().addTo(map);
 
@@ -383,9 +397,19 @@
             //         存量最多：計算一定範圍內所有marker，口罩總數（成人+兒童）最多，取最大
             //         *已標星號
             //
-            // 產生marker
+            switch (showMask) {
+                case 'adult':
+                    if (info.mask_adult === 0) {
+                        break;
+                    }
+                case 'child':
+                    if (info.mask_child === 0) {
+                        break;
+                    }
+            }
             markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
-                .bindPopup("<h1>" + info.name + "</h1><em>" + info.updated + " 更新</em><div class='map__maskNum'><div><em>成人</em> " + info.mask_adult + "</div><div><em>兒童</em> " + info.mask_child + "</div></div>"));
+                .bindPopup("<h1>" + info.name + "</h1><em>" + info.updated + " 更新</em><div class='map__maskNum'><div><em>成人</em> " + info.mask_adult + "</div><div><em>兒童</em> " + info.mask_child + "</div></div>"))
+                .openPopup();
         }
         // map.addLayer(markers);
     }
