@@ -6,10 +6,18 @@ pre, form, fieldset, table, th, td {
   padding: 0;
 }
 
+li, ol, ul {
+  list-style-type: none;
+}
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "Noto Sans TC";
+}
+
+* {
   font-family: "Noto Sans TC";
 }
 
@@ -26,10 +34,10 @@ img {
 }
 
 .sidebar {
-  width: 300px;
+  width: 320px;
   height: 100%;
   background-color: #F7F7F7;
-  padding: 30px;
+  padding: 20px;
   position: fixed;
   left: 0;
   top: 0;
@@ -53,15 +61,110 @@ img {
       display: block;
     }
   }
+}
 
-  .banner {
+.banner {
+  text-align: center;
+
+  img {
+    margin: auto;
   }
 }
 
+.sidebar__maskFilter {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+
+  input {
+    padding: 8px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    text-shadow: none;
+    color: #7d7b7b;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    &:first-child {
+      background-color: #EF8900;
+      color: #ffffff;
+    }
+  }
+}
+
+.maskMap-title {
+  font-size: 25px;
+  line-height: 2;
+  text-align: center;
+  margin-top: 20px;
+}
 
 .sidebar__store {
   overflow-y: auto;
   max-height: 50vh;
+
+  article {
+    margin-top: 10px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 23px 20px 30px;
+
+    h4 {
+      font-size: 19px;
+      line-height: 1.7;
+    }
+
+    ul {
+      margin-bottom: 10px;
+
+      li {
+        line-height: 1.8;
+      }
+    }
+  }
+}
+
+.sidebar__maskNum {
+  display: flex;
+  justify-content: space-around;
+
+  .mask-type {
+    text-align: center;
+    padding: 6px 10px;
+    background-color: #00C4C3;
+    border-radius: 30px;
+    color: #fff;
+    width: 100%;
+
+    &:first-child {
+      margin-right: 5px;
+    }
+
+    em {
+      font-style: normal;
+    }
+  }
+
+  .mask-adult {
+
+  }
+
+  .mask-child {
+
+  }
+}
+
+.sidebar__updateTime {
+  font-size: 14px;
+  color: #cccccc;
+  line-height: 3;
+  text-align: right;
+  display: block;
 }
 
 .marker-cluster-small {
