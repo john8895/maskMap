@@ -161,7 +161,6 @@ function getTodat() {
 
 // 成人、兒童口罩篩選
 function btnShowMask() {
-    console.log("btnShowMask");
     let maskBtn = document.getElementById('fliterMask').getElementsByTagName('input');
     for (let i = 0; i < maskBtn.length; i++) {
         maskBtn[i].onclick = function () {
@@ -173,7 +172,7 @@ function btnShowMask() {
                     updateStoreList('child');
                     break;
                 default:
-                    updateStoreList('all');
+                    updateStoreList();
             }
         }
     }
@@ -183,72 +182,58 @@ btnShowMask();
 
 // 篩選口罩數量，更新左側列表
 function updateStoreList(showMask) {
-    console.log("updateStoreList");
-
+    showMask = showMask ? showMask : 'all';
     let str = "";
-    // let filterMask = data.filter(function (item, index, array) {
-        // if(showMask){
-        //     switch (showMask) {
-        //         case 'adult':
-        //             return item.properties.mask_adult;
-        //             break;
-        //         case 'child':
-        //             return item.properties.mask_child;
-        //             break;
-        //         default:
-        //             return item;
-        //     }
-        // }
-    // });
-// TODO: 2020.02.14 研究判斷式與continue、break關係
+// TODO: 2020.02.14 冠均幫忙簡化
+    let maskStoreTotal = 0;
+    let limit = 0;
     for (let i = 0; i < data.length; i++) {
-        console.log(data[i]);
-        if(showMask && showMask === 'adult'){
-            // filterMask == data[i]
-            console.log('adult');
-            if(data[i].properties.mask_adult != 0){
-                console.log(data[i].properties.name + "成人口罩還有" + data[i].properties.mask_adult);
-            }else{
-                continue;
+        limit = 0;
+        if (showMask && showMask === 'adult') {
+            if (data[i].properties.mask_adult !== 0) {
+                limit++;
             }
-        }else if (showMask && showMask === 'child') {
-            console.log('child');
-        }else if(showMask && showMask === 'all'){
-            console.log('all');
-        }
-        
-        function dataOutputList(){
+        } else if (showMask && showMask === 'child') {
+            if (data[i].properties.mask_child !== 0) {
+                limit++;
+            }
 
+        } else {
+            limit++;
         }
-        let storeStr = `<article>
-        <h4>${data[i].properties.name}</h4>
-            <ul>
-                <li>${data[i].properties.address}</li>
-                <li>${data[i].properties.phone}</li>
-<!--                <li>今日營業時間：${data[i].properties.available}</li>-->
-            </ul>
-        <div class="sidebar__maskNum">
-            <div class="mask-type mask-adult"><em>成人</em> ${data[i].properties.mask_adult}</div>
-            <div class="mask-type mask-child"><em>兒童</em> ${data[i].properties.mask_child}</div>
-            
-        </div>
-        <span class="sidebar__updateTime">
-            ${data[i].properties.updated} 更新
-        </span>
-              </article>`;
-        str += storeStr
+        if  (limit > 0) {
+
+            str += `<article>
+                            <h4>${data[i].properties.name}</h4>
+                                <ul>
+                                    <li>${data[i].properties.address}</li>
+                                    <li>${data[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${data[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult"><em>成人</em> ${data[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child"><em>兒童</em> ${data[i].properties.mask_child}</div>
+                                
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${data[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+            maskStoreTotal++;
+        }
+
     }
     document.getElementById('storeList').innerHTML = str;
-    // generateMarker('true');
+    document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
 }
 
 // 偵測使用者定位，再產生地圖
-navigator.geolocation.getCurrentPosition(getPosition);
-function getPosition(position) {
-    let myLocation = [position.coords.latitude, position.coords.longitude];
-    getMap(myLocation);
-}
-
+// navigator.geolocation.getCurrentPosition(getPosition);
+// function getPosition(position) {
+//     let myLocation = [position.coords.latitude, position.coords.longitude];
+//     getMap(myLocation);
+// }
+getMap(); // temp============啟用偵測定位後刪除
 // 產生地圖
 function getMap(myLocation) {
     let map = L.map('map', {
@@ -265,7 +250,7 @@ function getMap(myLocation) {
     }).addTo(map);
 
 
-    generateMarker(getMapSuccess,map);
+    generateMarker(getMapSuccess, map);
     // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
     //     .bindPopup('<h1>我的位置</h1>');
 
@@ -316,7 +301,8 @@ function getMap(myLocation) {
     //         *已標星號
     //
 }
-function generateMarker(getMapSuccess, map){
+
+function generateMarker(getMapSuccess, map) {
     // ICON
     let greenIcon = new L.Icon({
         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -351,7 +337,7 @@ function generateMarker(getMapSuccess, map){
         shadowSize: [41, 41]
     });
     // 群組 marker
-    if(!getMapSuccess){
+    if (!getMapSuccess) {
         return;
     }
     let markers = new L.MarkerClusterGroup().addTo(map);
