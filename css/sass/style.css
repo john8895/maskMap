@@ -135,27 +135,6 @@ img {
 .sidebar__maskNum .mask-type em {
   font-style: normal;
 }
-.sidebar__maskNum .noMask {
-  background-color: #ccc;
-}
-.sidebar__maskNum.map__maskNum .mask-type {
-  padding: 2px 10px;
-}
-
-.sidebar__nowLocation {
-  text-align: center;
-  margin: 10px 0 20px;
-}
-
-.from-group {
-  margin: 10px;
-}
-.from-group select {
-  line-height: 2;
-  font-size: 17px;
-  padding: 5px;
-}
-
 .sidebar__updateTime {
   font-size: 14px;
   color: #cccccc;

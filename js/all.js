@@ -147,7 +147,7 @@ let showMask = "";
 getTodat();
 // getMap();
 updateStoreList('all');
-
+UserChooseLocation();
 // function my$(id) {
 //     return document.getElementById(id);
 // }
@@ -158,6 +158,21 @@ function getTodat() {
     let todayDate = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
     document.getElementById('todayDate').append(todayDate);
 }
+
+
+function UserChooseLocation() {
+    // 選擇行政區插件
+    new TwCitySelector();
+    const county = document.getElementById('citySelector').getElementsByClassName('county')[0];
+    const district = document.getElementById('citySelector').getElementsByClassName('district');
+// TODO: 2020.02.14 change時要取得value，然後篩選資料，輸出店家名單，最後再重輸出到地圖上
+    // county.addEventListener('change', function () {
+    //     console.log(county.value);
+    // });
+    console.log(county);
+
+}
+
 
 // 成人、兒童口罩篩選
 function btnShowMask() {
@@ -184,7 +199,7 @@ btnShowMask();
 function updateStoreList(showMask) {
     showMask = showMask ? showMask : 'all';
     let str = "";
-// TODO: 2020.02.14 冠均幫忙簡化
+
     let maskStoreTotal = 0;
     let limit = 0;
     for (let i = 0; i < data.length; i++) {
@@ -201,8 +216,10 @@ function updateStoreList(showMask) {
         } else {
             limit++;
         }
-        if  (limit > 0) {
-
+        if (limit > 0) {
+            if (data[i].properties.mask_adult + data[i].properties.mask_child === 0) {
+                continue;
+            }
             str += `<article>
                             <h4>${data[i].properties.name}</h4>
                                 <ul>
@@ -211,9 +228,8 @@ function updateStoreList(showMask) {
                     <!--                <li>今日營業時間：${data[i].properties.available}</li>-->
                                 </ul>
                             <div class="sidebar__maskNum">
-                                <div class="mask-type mask-adult"><em>成人</em> ${data[i].properties.mask_adult}</div>
-                                <div class="mask-type mask-child"><em>兒童</em> ${data[i].properties.mask_child}</div>
-                                
+                                <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
                             </div>
                             <span class="sidebar__updateTime">
                                 ${data[i].properties.updated} 更新
@@ -226,6 +242,7 @@ function updateStoreList(showMask) {
     document.getElementById('storeList').innerHTML = str;
     document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
 }
+
 
 // 偵測使用者定位，再產生地圖
 // navigator.geolocation.getCurrentPosition(getPosition);
@@ -351,7 +368,13 @@ function generateMarker(getMapSuccess, map) {
             continue;
         }
         markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
-            .bindPopup("<h1>" + info.name + "</h1><em>" + info.updated + " 更新</em><div class='map__maskNum'><div><em>成人</em> " + info.mask_adult + "</div><div><em>兒童</em> " + info.mask_child + "</div></div>"))
+            .bindPopup(
+                `<h1>${info.name}</h1>
+                 <em>${info.updated} 更新</em>
+                 <div class='sidebar__maskNum map__maskNum'>
+                     <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
+                     <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
+                 </div>`))
             .openPopup();
     }
     map.addLayer(markers);

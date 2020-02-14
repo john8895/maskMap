@@ -1,4 +1,5 @@
 @import 'mixins';
+
 html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote,
 pre, form, fieldset, table, th, td {
   margin: 0;
@@ -127,7 +128,6 @@ img {
     }
   }
 }
-
 .sidebar__maskNum {
   display: flex;
   justify-content: space-around;
@@ -143,21 +143,31 @@ img {
     &:first-child {
       margin-right: 5px;
     }
-
     em {
       font-style: normal;
     }
   }
-
-  .mask-adult {
-
+  .noMask {
+    background-color: #ccc;
   }
-
-  .mask-child {
-
+  &.map__maskNum {
+    .mask-type {
+      padding: 2px 10px;
+    }
   }
 }
-
+.sidebar__nowLocation {
+  text-align: center;
+  margin: 10px 0 20px;
+}
+.from-group {
+  margin: 10px;
+  select {
+    line-height: 2;
+    font-size: 17px;
+    padding: 5px;
+  }
+}
 .sidebar__updateTime {
   font-size: 14px;
   color: #cccccc;
