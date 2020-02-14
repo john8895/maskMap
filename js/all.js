@@ -31,7 +31,7 @@ const dataJson = {
                 "name": "德川中西藥局",
                 "phone": "02 -27683399",
                 "address": "台北市松山區八德路4段96號",
-                "mask_adult": 0,
+                "mask_adult": 1,
                 "mask_child": 46,
                 "updated": "2020\/02\/09 14:36:40",
                 "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午休診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午休診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上休診、星期日晚上休診",
@@ -184,38 +184,56 @@ btnShowMask();
 // 篩選口罩數量，更新左側列表
 function updateStoreList(showMask) {
     console.log("updateStoreList");
-    // TODO: 2020.02.13 這裡要改成 if(item.properties.mask_adult!==0)
-    let str = "";
-    let filterMask = data.filter(function (item, index, array) {
-        if(showMask){
-            switch (showMask) {
-                case 'adult':
-                    return item.properties.mask_adult;
-                    break;
-                case 'child':
-                    return item.properties.mask_child;
-                    break;
-                default:
-                    return item;
-            }
-        }
-    });
 
-    for (let i = 0; i < filterMask.length; i++) {
+    let str = "";
+    // let filterMask = data.filter(function (item, index, array) {
+        // if(showMask){
+        //     switch (showMask) {
+        //         case 'adult':
+        //             return item.properties.mask_adult;
+        //             break;
+        //         case 'child':
+        //             return item.properties.mask_child;
+        //             break;
+        //         default:
+        //             return item;
+        //     }
+        // }
+    // });
+// TODO: 2020.02.14 研究判斷式與continue、break關係
+    for (let i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        if(showMask && showMask === 'adult'){
+            // filterMask == data[i]
+            console.log('adult');
+            if(data[i].properties.mask_adult != 0){
+                console.log(data[i].properties.name + "成人口罩還有" + data[i].properties.mask_adult);
+            }else{
+                continue;
+            }
+        }else if (showMask && showMask === 'child') {
+            console.log('child');
+        }else if(showMask && showMask === 'all'){
+            console.log('all');
+        }
+        
+        function dataOutputList(){
+
+        }
         let storeStr = `<article>
-        <h4>${filterMask[i].properties.name}</h4>
+        <h4>${data[i].properties.name}</h4>
             <ul>
-                <li>${filterMask[i].properties.address}</li>
-                <li>${filterMask[i].properties.phone}</li>
-<!--                <li>今日營業時間：${filterMask[i].properties.available}</li>-->
+                <li>${data[i].properties.address}</li>
+                <li>${data[i].properties.phone}</li>
+<!--                <li>今日營業時間：${data[i].properties.available}</li>-->
             </ul>
         <div class="sidebar__maskNum">
-            <div class="mask-type mask-adult"><em>成人</em> ${filterMask[i].properties.mask_adult}</div>
-            <div class="mask-type mask-child"><em>兒童</em> ${filterMask[i].properties.mask_child}</div>
+            <div class="mask-type mask-adult"><em>成人</em> ${data[i].properties.mask_adult}</div>
+            <div class="mask-type mask-child"><em>兒童</em> ${data[i].properties.mask_child}</div>
             
         </div>
         <span class="sidebar__updateTime">
-            ${filterMask[i].properties.updated} 更新
+            ${data[i].properties.updated} 更新
         </span>
               </article>`;
         str += storeStr
