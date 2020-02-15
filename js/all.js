@@ -160,14 +160,15 @@ function getTodat() {
     let str="";
     if(Today.getDay()===0){
         //星期日
-        str=`今天是${nowWeek}，不限身份證字號都可以買口罩`;
+        str=`<h1>${nowWeek}</h1>不限身份證字號都可以買口罩`;
     }else if(Today.getDay()%2===0) {
         //偶數
-        str=`今天是${nowWeek}，身份證字號末 2、4、6、8、0 的人可以買口罩`;
+        str=`<h1>${nowWeek}</h1>身份證<span class="id-last">最後一碼為</span><div><span class="idNum">2、4、6、8、0</span> 的人可以買口罩！</div>`;
     }else {
         //奇數
-        str=`今天是${nowWeek}，身份證字號末 1、3、5、7、9 的人可以買口罩`;
+        str=`<h1>${nowWeek}</h1>身份證<span class="id-last">最後一碼為</span><div><span class="idNum">1、3、5、7、9</span> 的人可以買口罩！</div>`;
     }
+    document.getElementById('whoCanBuy').innerHTML = str;
     console.log(str);
     //TODO:2020.02.15 今天星期幾，字號多少可以買口罩，判斷完成，要輸出到網頁====================
     let todayDate = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";

@@ -62,12 +62,28 @@ img {
     }
   }
 }
-
+.clearfix {
+  clear: both;
+}
 .banner {
-  text-align: center;
-
-  img {
-    margin: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  height: 130px;
+  border: 1px solid #dddddd;
+  margin-top: 5px;
+  padding: 10px 20px;
+  h1 {
+    font-size: 29px;
+  }
+  .id-last{
+    font-weight: bold;
+    font-size: 110%;
+    letter-spacing: 1px;
+  }
+  .idNum {
+    font-size: 21px;
+    color: #EF8A00;
+    font-weight: bold;
   }
 }
 

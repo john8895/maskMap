@@ -59,11 +59,30 @@ img {
   display: block;
 }
 
-.banner {
-  text-align: center;
+.clearfix {
+  clear: both;
 }
-.banner img {
-  margin: auto;
+
+.banner {
+  background-color: #ffffff;
+  border-radius: 10px;
+  height: 130px;
+  border: 1px solid #dddddd;
+  margin-top: 5px;
+  padding: 10px 20px;
+}
+.banner h1 {
+  font-size: 29px;
+}
+.banner .id-last {
+  font-weight: bold;
+  font-size: 110%;
+  letter-spacing: 1px;
+}
+.banner .idNum {
+  font-size: 21px;
+  color: #EF8A00;
+  font-weight: bold;
 }
 
 .sidebar__maskFilter {
