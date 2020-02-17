@@ -11938,25 +11938,30 @@ function generateMarker(getMapSuccess, map) {
     if (!getMapSuccess) {
         return;
     }
-    let markers = new L.MarkerClusterGroup().addTo(map);
-    // 循環取得遠端資料
-    for (let i = 0; i < data.length; i++) {
-        let lat = data[i].geometry.coordinates[1];
-        let lng = data[i].geometry.coordinates[0];
-        let info = data[i].properties;
-        // 如果口罩數量為0，則不顯示marker
-        if (info.mask_adult + info.mask_child === 0) {
-            continue;
-        }
-        markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
-            .bindPopup(
-                `<h1>${info.name}</h1>
-                 <em>${info.updated} 更新</em>
-                 <div class='sidebar__maskNum map__maskNum'>
-                     <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
-                     <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
-                 </div>`))
-            .openPopup();
-    }
-    map.addLayer(markers);
+    // 2020.02.17 TODO:新增一個marker
+    L.marker([25.053144, 121.544704], {icon: redIcon}).addTo(map)
+        .bindPopup('<h1>我的位置</h1>');
+
+
+    // let markers = new L.MarkerClusterGroup().addTo(map);
+    // // 循環取得遠端資料
+    // for (let i = 0; i < data.length; i++) {
+    //     let lat = data[i].geometry.coordinates[1];
+    //     let lng = data[i].geometry.coordinates[0];
+    //     let info = data[i].properties;
+    //     // 如果口罩數量為0，則不顯示marker
+    //     if (info.mask_adult + info.mask_child === 0) {
+    //         continue;
+    //     }
+    //     markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
+    //         .bindPopup(
+    //             `<h1>${info.name}</h1>
+    //              <em>${info.updated} 更新</em>
+    //              <div class='sidebar__maskNum map__maskNum'>
+    //                  <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
+    //                  <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
+    //              </div>`))
+    //         .openPopup();
+    // }
+    // map.addLayer(markers);
 }
