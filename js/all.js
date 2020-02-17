@@ -11698,13 +11698,10 @@ const data = dataJson.features;
 let showMask = "";
 
 getTodat();
-// getMap();
 updateStoreList('all');
 UserChooseLocation();
 getUserLocation();
-// function my$(id) {
-//     return document.getElementById(id);
-// }
+btnShowMask();
 
 // 取得今天日期
 function getTodat() {
@@ -11726,58 +11723,10 @@ function getTodat() {
     let todayDate = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
     document.getElementById('todayDate').append(todayDate);
 }
-
 function UserChooseLocation() {
     // 選擇行政區插件
     new TwCitySelector();
 }
-
-// TODO: 2020.02.14 change時要取得value，然後篩選資料，輸出店家名單，最後再重輸出到地圖上====================
-function getUserLocation() {
-    let cityBtn = document.getElementById('citySelectorBtn').onclick = function () {
-        const county = document.getElementById('citySelector').getElementsByTagName('select')[0];
-        const district = document.getElementById('citySelector').getElementsByClassName('district')[0];
-        if(county.value && district.value){
-            let keyword = county.value + district.value;
-            let result = dataJson.features.filter(item => item.properties.address.indexOf(keyword) !== -1 ? keyword : false);
-            console.log(result);
-            let str='';
-            let maskStoreTotal = 0;
-            if(!result) {
-                maskStoreTotal++;
-                return;
-            }
-            for (let i = 0; i < result.length; i++) {
-                // console.log(result[i]);
-                str += `<article>
-                            <h4>${result[i].properties.name}</h4>
-                                <ul>
-                                    <li>${result[i].properties.address}</li>
-                                    <li>${result[i].properties.phone}</li>
-                    <!--                <li>今日營業時間：${result[i].properties.available}</li>-->
-                                </ul>
-                            <div class="sidebar__maskNum">
-                                <div class="mask-type mask-adult ${result[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${result[i].properties.mask_adult}</div>
-                                <div class="mask-type mask-child ${result[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${result[i].properties.mask_child}</div>
-                            </div>
-                            <span class="sidebar__updateTime">
-                                ${result[i].properties.updated} 更新
-                            </span>
-                                  </article>`;
-                maskStoreTotal++;
-
-            }
-            document.getElementById('storeList').innerHTML = str;
-            document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
-
-            // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
-            //     .bindPopup('<h1>我的位置</h1>');
-        }
-
-    }
-
-}
-
 // 成人、兒童口罩篩選
 function btnShowMask() {
     let maskBtn = document.getElementById('fliterMask').getElementsByTagName('input');
@@ -11796,9 +11745,6 @@ function btnShowMask() {
         }
     }
 }
-
-btnShowMask();
-
 // 篩選口罩數量，更新左側列表
 function updateStoreList(showMask) {
     showMask = showMask ? showMask : 'all';
@@ -11847,6 +11793,53 @@ function updateStoreList(showMask) {
     document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
 }
 
+// TODO: 2020.02.14 change時要取得value，然後篩選資料，輸出店家名單，最後再重輸出到地圖上====================
+function getUserLocation() {
+    let cityBtn = document.getElementById('citySelectorBtn').onclick = function () {
+        const county = document.getElementById('citySelector').getElementsByTagName('select')[0];
+        const district = document.getElementById('citySelector').getElementsByClassName('district')[0];
+        if(county.value && district.value){
+            let keyword = county.value + district.value;
+            let result = dataJson.features.filter(item => item.properties.address.indexOf(keyword) !== -1 ? keyword : false);
+            console.log(result);
+            let str='';
+            let maskStoreTotal = 0;
+            if(!result) {
+                maskStoreTotal++;
+                return;
+            }
+            for (let i = 0; i < result.length; i++) {
+                // console.log(result[i]);
+                str += `<article>
+                            <h4>${result[i].properties.name}</h4>
+                                <ul>
+                                    <li>${result[i].properties.address}</li>
+                                    <li>${result[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${result[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult ${result[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${result[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${result[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${result[i].properties.mask_child}</div>
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${result[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+                maskStoreTotal++;
+
+            }
+            document.getElementById('storeList').innerHTML = str;
+            document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
+
+            // TODO: 2020.02.17 把篩選後的資料，輸出marker到地圖上
+            // generateMarker();
+            // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
+            //     .bindPopup('<h1>我的位置</h1>');
+        }
+
+    }
+
+}
 
 // 偵測使用者定位，再產生地圖
 // navigator.geolocation.getCurrentPosition(getPosition);
@@ -11854,14 +11847,14 @@ function updateStoreList(showMask) {
 //     let myLocation = [position.coords.latitude, position.coords.longitude];
 //     getMap(myLocation);
 // }
-getMap(); // temp============啟用偵測定位後刪除
+getMap(); // temp============啟用偵測定位後
 // 產生地圖
 function getMap(myLocation) {
     let map = L.map('map', {
         center: [25.053144, 121.544704],
         zoom: 16
     });
-    const getMapSuccess = true;
+    // const getMapSuccess = true;
     // 註冊API
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -11870,37 +11863,6 @@ function getMap(myLocation) {
         accessToken: 'pk.eyJ1Ijoiam9objg4OTUiLCJhIjoiY2s2ZjBpbnRlMDQxNTNlbXQzcGRmd3g0ZSJ9.CZhZ2p1dMuFgIPard8rqwg'
     }).addTo(map);
 
-
-    generateMarker(getMapSuccess, map);
-    // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
-    //     .bindPopup('<h1>我的位置</h1>');
-    // 與目前位置距離
-    // 目前地址
-    // 地圖
-    //     判斷：
-    //     當前位置：紅色圖示、店家點（綠色）
-    // infoWindow
-    // 店名、距離當前幾km
-    // 導航連結
-    // *標星號
-    // 側邊欄
-    //     顯示字串：最後一碼…
-    //     當前位置：顯示地址
-    //     輸入地址 查詢
-    //     列表項目
-    //         店名、距離當前幾km
-    //         地址
-    //         電話（點選可撥打）
-    //         營業時間
-    //         口罩數量：成人 0 、兒童 20
-    //         *標星號
-    //         *導航連結
-    //         距離最近：離當前位置最近：取得一定範圍內所有marker，計算與當前位置之間的差距，取最小
-    //         存量最多：計算一定範圍內所有marker，口罩總數（成人+兒童）最多，取最大
-    //         *已標星號
-}
-
-function generateMarker(getMapSuccess, map) {
     // ICON
     let greenIcon = new L.Icon({
         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -11935,14 +11897,12 @@ function generateMarker(getMapSuccess, map) {
         shadowSize: [41, 41]
     });
     // 群組 marker
-    if (!getMapSuccess) {
-        return;
-    }
+    // if (!getMapSuccess) {
+    //     return;
+    // }
     // 2020.02.17 TODO:新增一個marker
-    L.marker([25.053144, 121.544704], {icon: redIcon}).addTo(map)
-        .bindPopup('<h1>我的位置</h1>');
-
-
+    // L.marker([25.053144, 121.544704], {icon: redIcon}).addTo(map)
+    //     .bindPopup('<h1>我的位置</h1>');
     // let markers = new L.MarkerClusterGroup().addTo(map);
     // // 循環取得遠端資料
     // for (let i = 0; i < data.length; i++) {
@@ -11965,3 +11925,5 @@ function generateMarker(getMapSuccess, map) {
     // }
     // map.addLayer(markers);
 }
+// function generateMarker(getMapSuccess, map) {
+// }
