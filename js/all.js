@@ -11723,10 +11723,12 @@ function getTodat() {
     let todayDate = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
     document.getElementById('todayDate').append(todayDate);
 }
+
 function UserChooseLocation() {
     // 選擇行政區插件
     new TwCitySelector();
 }
+
 // 成人、兒童口罩篩選
 function btnShowMask() {
     let maskBtn = document.getElementById('fliterMask').getElementsByTagName('input');
@@ -11745,6 +11747,7 @@ function btnShowMask() {
         }
     }
 }
+
 // 篩選口罩數量，更新左側列表
 function updateStoreList(showMask) {
     showMask = showMask ? showMask : 'all';
@@ -11798,13 +11801,13 @@ function getUserLocation() {
     let cityBtn = document.getElementById('citySelectorBtn').onclick = function () {
         const county = document.getElementById('citySelector').getElementsByTagName('select')[0];
         const district = document.getElementById('citySelector').getElementsByClassName('district')[0];
-        if(county.value && district.value){
+        if (county.value && district.value) {
             let keyword = county.value + district.value;
             let result = dataJson.features.filter(item => item.properties.address.indexOf(keyword) !== -1 ? keyword : false);
             console.log(result);
-            let str='';
+            let str = '';
             let maskStoreTotal = 0;
-            if(!result) {
+            if (!result) {
                 maskStoreTotal++;
                 return;
             }
@@ -11832,7 +11835,9 @@ function getUserLocation() {
             document.getElementById('maskMapTitle').getElementsByTagName('span')[0].innerText = maskStoreTotal;
 
             // TODO: 2020.02.17 把篩選後的資料，輸出marker到地圖上
-            // generateMarker();
+            // TODO: 2020.02.18 地圖已經初始化，所以再次執行getMap會出現錯誤，要先移除再重新初始化
+            // map.invalidateSize();
+            // getMap();
             // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
             //     .bindPopup('<h1>我的位置</h1>');
         }
@@ -11849,9 +11854,16 @@ function getUserLocation() {
 // }
 getMap(); // temp============啟用偵測定位後
 // 產生地圖
-function getMap(myLocation) {
+function getMap() {
+    // if (!document.getElementById('map')) {
+    //     let bulidMap = document.createElement('div');
+    //     bulidMap.id = 'map';
+    //     document.body.appendChild(bulidMap);
+    // }
+    let myLoc = [25.02271, 121.528509];
+
     let map = L.map('map', {
-        center: [25.053144, 121.544704],
+        center: myLoc,
         zoom: 16
     });
     // const getMapSuccess = true;
@@ -11900,9 +11912,10 @@ function getMap(myLocation) {
     // if (!getMapSuccess) {
     //     return;
     // }
-    // 2020.02.17 TODO:新增一個marker
-    // L.marker([25.053144, 121.544704], {icon: redIcon}).addTo(map)
-    //     .bindPopup('<h1>我的位置</h1>');
+    L.marker(myLoc, {icon: redIcon}).addTo(map)
+        .bindPopup('<h1>我的位置</h1>');
+
+
     // let markers = new L.MarkerClusterGroup().addTo(map);
     // // 循環取得遠端資料
     // for (let i = 0; i < data.length; i++) {
@@ -11925,5 +11938,6 @@ function getMap(myLocation) {
     // }
     // map.addLayer(markers);
 }
+
 // function generateMarker(getMapSuccess, map) {
 // }
