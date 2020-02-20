@@ -11836,10 +11836,35 @@ function getUserLocation() {
 
             // TODO: 2020.02.17 把篩選後的資料，輸出marker到地圖上
             // TODO: 2020.02.18 地圖已經初始化，所以再次執行getMap會出現錯誤，要先移除再重新初始化
+            // TODO: 2020.02.20 要如何重新繪製地圖，或，銷毀地圖再重新繪製地圖？
+            console.log('getMap');
             // map.invalidateSize();
             // getMap();
             // L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
             //     .bindPopup('<h1>我的位置</h1>');
+            // TODO: 2020.02.20 新建立圖層 newMarkers ，輸出到地圖上
+            let newMarkers = new L.MarkerClusterGroup().addTo(map);
+            for (let i = 0; i < result.length; i++) {
+                let lat = result[i].geometry.coordinates[1];
+                let lng = result[i].geometry.coordinates[0];
+                let info = result[i].properties;
+                // 如果口罩數量為0，則不顯示marker
+                if (info.mask_adult + info.mask_child === 0) {
+                    continue;
+                }
+                newMarkers.addLayer(L.marker([lat, lng])
+                    .bindPopup(
+                        `<h1>${info.name}</h1>
+                 <em>${info.updated} 更新</em>
+                 <div class='sidebar__maskNum map__maskNum'>
+                     <div class="mask-type mask-adult ${result[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${result[i].properties.mask_adult}</div>
+                     <div class="mask-type mask-child ${result[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${result[i].properties.mask_child}</div>
+                 </div>`))
+                    .openPopup();
+            }
+            map.addLayer(newMarkers);
+            // TODO: 2020.02.20 移除圖層
+            // map.removeLayer(markers);
         }
 
     }
@@ -11852,7 +11877,25 @@ function getUserLocation() {
 //     let myLocation = [position.coords.latitude, position.coords.longitude];
 //     getMap(myLocation);
 // }
-getMap(); // temp============啟用偵測定位後
+ // temp============啟用偵測定位後
+
+// TODO: 2020.02.20 把地圖宣告成全域變數
+let myLoc = [25.02271, 121.528509];
+
+let map = L.map('map', {
+    center: myLoc,
+    zoom: 16
+});
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 20,
+    id: 'mapbox/streets-v11',
+    accessToken: 'pk.eyJ1Ijoiam9objg4OTUiLCJhIjoiY2s2ZjBpbnRlMDQxNTNlbXQzcGRmd3g0ZSJ9.CZhZ2p1dMuFgIPard8rqwg'
+}).addTo(map);
+
+
+getMap();
 // 產生地圖
 function getMap() {
     // if (!document.getElementById('map')) {
@@ -11860,20 +11903,12 @@ function getMap() {
     //     bulidMap.id = 'map';
     //     document.body.appendChild(bulidMap);
     // }
-    let myLoc = [25.02271, 121.528509];
 
-    let map = L.map('map', {
-        center: myLoc,
-        zoom: 16
-    });
+    // map.on('viewreset', function(){
+    //     console.log('resetting..');
+    // });
     // const getMapSuccess = true;
     // 註冊API
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 20,
-        id: 'mapbox/streets-v11',
-        accessToken: 'pk.eyJ1Ijoiam9objg4OTUiLCJhIjoiY2s2ZjBpbnRlMDQxNTNlbXQzcGRmd3g0ZSJ9.CZhZ2p1dMuFgIPard8rqwg'
-    }).addTo(map);
 
     // ICON
     let greenIcon = new L.Icon({
@@ -11912,31 +11947,33 @@ function getMap() {
     // if (!getMapSuccess) {
     //     return;
     // }
-    L.marker(myLoc, {icon: redIcon}).addTo(map)
-        .bindPopup('<h1>我的位置</h1>');
+    // L.marker(myLoc, {icon: redIcon}).addTo(map)
+    //     .bindPopup('<h1>我的位置</h1>');
+    //
+    // console.log(map.removeLayer(L.marker));
 
+    let markers = new L.MarkerClusterGroup().addTo(map);
+    // 循環取得遠端資料
+    for (let i = 0; i < data.length; i++) {
+        let lat = data[i].geometry.coordinates[1];
+        let lng = data[i].geometry.coordinates[0];
+        let info = data[i].properties;
+        // 如果口罩數量為0，則不顯示marker
+        if (info.mask_adult + info.mask_child === 0) {
+            continue;
+        }
+        markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
+            .bindPopup(
+                `<h1>${info.name}</h1>
+                 <em>${info.updated} 更新</em>
+                 <div class='sidebar__maskNum map__maskNum'>
+                     <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
+                     <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
+                 </div>`))
+            .openPopup();
+    }
+    map.addLayer(markers);
 
-    // let markers = new L.MarkerClusterGroup().addTo(map);
-    // // 循環取得遠端資料
-    // for (let i = 0; i < data.length; i++) {
-    //     let lat = data[i].geometry.coordinates[1];
-    //     let lng = data[i].geometry.coordinates[0];
-    //     let info = data[i].properties;
-    //     // 如果口罩數量為0，則不顯示marker
-    //     if (info.mask_adult + info.mask_child === 0) {
-    //         continue;
-    //     }
-    //     markers.addLayer(L.marker([lat, lng], {icon: info.mask_adult + info.mask_child !== 0 ? blueIcon : greyIcon})
-    //         .bindPopup(
-    //             `<h1>${info.name}</h1>
-    //              <em>${info.updated} 更新</em>
-    //              <div class='sidebar__maskNum map__maskNum'>
-    //                  <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
-    //                  <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
-    //              </div>`))
-    //         .openPopup();
-    // }
-    // map.addLayer(markers);
 }
 
 // function generateMarker(getMapSuccess, map) {

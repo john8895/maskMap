@@ -15,6 +15,7 @@
             width: 80%;
             float: left;
         }
+
         .box {
             float: right;
         }
@@ -25,19 +26,16 @@
 <body>
 <div id="map"></div>
 
-    <input type="button" value="按鈕" id="btn">
+<input type="button" value="按鈕" id="btn">
 </div>
 <script>
     getMap();
-    
-    function f1() {
-        console.log("我執行了！");
-        getMap();
-    }
+
     document.getElementById('btn').onclick = function () {
-        f1();
+        console.log("我執行了！");
+
     }
-    
+
     function getMap() {
         let map = L.map('map', {
             center: [25.02271, 121.528509],

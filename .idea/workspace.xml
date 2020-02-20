@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.scss" afterDir="false" />
-=======
->>>>>>> 995cf1266e1701ab0b5299aef2f74beabd0427e6
-      <change beforePath="$PROJECT_DIR$/maskMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/maskMap.html" afterDir="false" />
->>>>>>> bcb936310337ce767043f256dc1527111cedb593
+      <change beforePath="$PROJECT_DIR$/0219-01.html" beforeDir="false" afterPath="$PROJECT_DIR$/0219-01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/all.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +45,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -93,25 +84,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581229571918</updated>
-<<<<<<< HEAD
       <workItem from="1581229573063" duration="25847000" />
-=======
       <workItem from="1581229573063" duration="25421000" />
-<<<<<<< HEAD
       <workItem from="1581393728774" duration="2900000" />
->>>>>>> bcb936310337ce767043f256dc1527111cedb593
-=======
       <workItem from="1581393728774" duration="3138000" />
       <workItem from="1581412808332" duration="589000" />
       <workItem from="1581466494994" duration="1773000" />
-<<<<<<< HEAD
       <workItem from="1581482943137" duration="1387000" />
       <workItem from="1581552905048" duration="1259000" />
       <workItem from="1581566576754" duration="2171000" />
-=======
       <workItem from="1581482943137" duration="1128000" />
->>>>>>> 995cf1266e1701ab0b5299aef2f74beabd0427e6
->>>>>>> 291c15319862768cd9765fb40f22a4b68a02a90c
+      <workItem from="1582086409716" duration="186000" />
+      <workItem from="1582157832242" duration="642000" />
+      <workItem from="1582173362323" duration="1572000" />
     </task>
     <servers />
   </component>
@@ -135,9 +120,13 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="186" y="186" key="SettingsEditor" timestamp="1581553300487">
+    <state x="529" y="397" key="#com.intellij.codeInsight.template.impl.EditVariableDialog" timestamp="1582173476516">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="186" y="186" key="SettingsEditor/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581553300487" />
+    <state x="529" y="397" key="#com.intellij.codeInsight.template.impl.EditVariableDialog/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1582173476516" />
+    <state x="186" y="186" width="1253" height="715" key="SettingsEditor" timestamp="1582173531156">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="186" y="186" width="1253" height="715" key="SettingsEditor/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1582173531156" />
   </component>
 </project>
