@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/test-view.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/0217-01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/0219-01.html" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,18 +50,6 @@
       <recent name="D:\Github\maskMap" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="maskMap.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maskMap/maskMap.html" useBuiltInWebServerPort="true">
       <method v="2" />
@@ -97,7 +81,8 @@
       <workItem from="1581566576754" duration="2171000" />
       <workItem from="1581482943137" duration="1128000" />
       <workItem from="1582122865018" duration="1198000" />
-      <workItem from="1582583406128" duration="301000" />
+      <workItem from="1582583406128" duration="1400000" />
+      <workItem from="1585444318469" duration="7098000" />
     </task>
     <servers />
   </component>

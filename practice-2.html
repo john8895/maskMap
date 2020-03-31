@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>Mask Map practice-2</title>
+    <!--    leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <!--    markerCluster-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <style>
+        html,body,#map {
+            width: 100%;
+            height: 100%;
+        }
+        .marker-cluster-small {
+            background-color: rgba(181, 226, 140, 0.6);
+        }
+
+        .marker-cluster-small div {
+            background-color: rgba(110, 204, 57, 0.6);
+        }
+
+        .marker-cluster-medium {
+            background-color: rgba(241, 211, 87, 0.6);
+        }
+
+        .marker-cluster-medium div {
+            background-color: rgba(240, 194, 12, 0.6);
+        }
+
+        .marker-cluster-large {
+            background-color: rgba(253, 156, 115, 0.6);
+        }
+
+        .marker-cluster-large div {
+            background-color: rgba(241, 128, 23, 0.6);
+        }
+
+        .marker-cluster {
+            background-clip: padding-box;
+            border-radius: 20px;
+        }
+
+        .marker-cluster div {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 5px;
+
+            text-align: center;
+            border-radius: 15px;
+            font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .marker-cluster span {
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    //假資料
+    var data = [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "5901012409",
+                "name": "家音藥局",
+                "phone": "02 -37652080",
+                "address": "台北市松山區民生東路5段73號",
+                "mask_adult": 738,
+                "mask_child": 100,
+                "updated": "2020\/03\/29 09:23:44",
+                "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                "note": "口罩販售時段 週一~五 16:00起、週六、日18:00起",
+                "custom_note": "實名制口罩販售時段\n週一~週五 14:00~22:00\n週六、週日 18:00~22:00\n每日依據配量販售，售完為止",
+                "website": "",
+                "county": "臺北市",
+                "town": "松山區",
+                "cunli": "東榮里",
+                "service_periods": "NNNNNNNNNNNNNNNNNNNNN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    120.298599,
+                    22.606925
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "5901012490",
+                "name": "中美藥局",
+                "phone": "02 -27627468",
+                "address": "台北市松山區富錦街531號",
+                "mask_adult": 519,
+                "mask_child": 59,
+                "updated": "2020\/03\/29 09:23:44",
+                "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                "note": "本局每日早上9:00，發放口罩號碼牌",
+                "custom_note": "",
+                "website": "",
+                "county": "臺北市",
+                "town": "松山區",
+                "cunli": "新益里",
+                "service_periods": "NNNNNNNNNNNNNNNNNNNNN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    120.298867,
+                    22.603082
+                ]
+            }
+        }
+    ];
+
+    //註冊地圖
+    var map = L.map('map',{
+        center: [22.607391, 120.299500],
+        zoom: 16
+    })
+    //引入圖專
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    //圖示
+    var greenIcon = new L.Icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    //建立marker
+    L.marker([22.604964, 120.300476], {icon: greenIcon}).addTo(map)
+        .bindPopup('<h1>高雄軟體園區</h1>')
+        .openPopup();
+
+    //新增圖層，marker群組
+    var markers = new L.MarkerClusterGroup().addTo(map);
+
+    for(var i=0;i<data.length;i++){
+        console.log(data[i].properties.name);
+        markers.addLayer(L.marker([data[i].geometry.coordinates[1],[data[i].geometry.coordinates[0]]],
+            {icon: greenIcon})
+            .bindPopup(data[i].properties.name));
+    }
+    map.addLayer(markers);
+
+    //讀取遠端資料
+    var xhr=new XMLHttpRequest();
+    xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
+    xhr.send();
+
+    xhr.onload = function () {
+        var data=JSON.parse(xhr.responseText).features;
+        for(var i=0;i<data.length;i++){
+            markers.addLayer(L.marker([  data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]  ],
+                {icon:greenIcon})
+                .bindPopup(`<h1>${data[i].properties.name}</h1>
+                            <p>成人：${data[i].properties.mask_adult}</p>
+                            <p>兒童：${data[i].properties.mask_child}</p>
+                            `))
+        }
+        map.addLayer(markers)
+    }
+
+</script>
+</body>
+</html>

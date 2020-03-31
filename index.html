@@ -2,13 +2,15 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>口罩即時地圖</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
+    <title>Mask Map practice-3</title>
+    <!--    leaflet-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <!--    markerCluster-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <aside class="sidebar">
@@ -29,10 +31,9 @@
         <div class="sidebar__nowLocation">
             <h3>選擇你的位置</h3>
 
-                <div class="from-group">
-                    <div role="tw-city-selector" id="citySelector"></div>
-                    <input type="button" value="送出" id="citySelectorBtn">
-                </div>
+            <div class="from-group">
+                <div role="tw-city-selector" id="citySelector"></div>
+            </div>
 
         </div>
         <hr>
@@ -43,15 +44,295 @@
         </div>
     </header>
     <main>
-        <h2 class="maskMap-title" id="maskMapTitle">尚有庫存店家 共 <span>1</span> 筆</h2>
+        <h2 class="maskMap-title" id="maskMapTitle">尚有庫存店家 共 <span id="maskLeftTitle">0</span> 筆</h2>
         <div class="sidebar__store" id="storeList">
         </div>
     </main>
 </aside>
 <div id="map"></div>
+
 <!--行政區插件-->
 <script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
-<!--<script src="http://maps.google.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&sensor=false"></script>-->
-<script src="js/all.js"></script>
+<script>
+    //註冊地圖
+    var map = L.map('map', {
+        center: [24.126471, 120.658887],
+        zoom: 16
+    });
+
+    //引入圖專
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    //圖示
+    var greyIcon = new L.Icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    var blueIcon = new L.Icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    var redIcon = new L.Icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    //建立marker
+    // L.marker([24.126471, 120.658887], {icon: redIcon}).addTo(map)
+    //     .bindPopup('<h1>你的位置</h1>')
+    //     .openPopup();
+
+
+    //讀取遠端資料
+    var data;
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
+    xhr.send();
+
+    xhr.onload = function () {
+        data = JSON.parse(xhr.responseText).features;
+        updateMap();
+    };
+
+    //新增圖層，marker群組
+    var markers = new L.MarkerClusterGroup().addTo(map);
+
+    //迴圈取得資料，並更新在右側地圖上
+    function updateMap() {
+        //一開始先移除marker
+        map.removeLayer(markers)
+        for (var i = 0; i < data.length; i++) {
+            //判斷有無口罩，無就給灰色圖示
+            var iconColor = data[i].properties.mask_adult === 0 ? greyIcon : blueIcon;
+            //新增圖層
+            markers.addLayer(
+                L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]],
+                    {icon: iconColor})
+                    .bindPopup(`
+                        <div>${data[i].properties.name}</div>
+                        <hr>
+                        <ul>
+                            <li>成人：${data[i].properties.mask_adult}</li>
+                            <li>兒童：${data[i].properties.mask_child}</li>
+                            <li>地址：${data[i].properties.address}</li>
+                        </ul>
+                `))
+        }
+        map.addLayer(markers)
+    }
+
+    // 選擇行政區插件
+    new TwCitySelector();
+    onload = function () {
+        var select = document.getElementById('citySelector');
+        var city = select.children[0];
+        var district = select.children[1];
+        district.onchange = function () {
+            var temp_keyword = city.value + district.value;
+            var temp_keyword1 = '';
+            //不管輸入「臺」或「台」，都會轉出另一個台（臺），得到兩個keyword的數組
+            if (temp_keyword.indexOf('台') >= 0) {
+                temp_keyword1 = temp_keyword.replace('台', '臺');
+            } else {
+                temp_keyword1 = temp_keyword.replace('臺', '台');
+            }
+            var keywords = [temp_keyword, temp_keyword1];
+            updateMaskList(keywords);
+        }
+    }
+    var addrDataArr = [];
+
+    //根據選擇城市、區域，進行數據篩選
+    function updateMaskList(keywords) {
+        var storeList = document.getElementById('storeList');
+        var maskLeftTitle = document.getElementById('maskLeftTitle');
+        var maskLeftNum = 0;
+        var str = '';
+        //-------------------------
+        var result_temp = [];
+        //將關鍵字篩選數據，取得result結果
+        keywords.forEach(function (kv, ki) {
+            result_temp[ki] = data.filter(function (value) {
+                return value.properties.address.indexOf(kv) !== -1 ? kv : false;
+            })
+        });
+
+        console.log(result_temp[0].length);
+        console.log(result_temp[1].length);
+
+        var result = result_temp[0].length !== result_temp[1].length ? result_temp[0].concat(result_temp[1]) :result_temp[0];
+
+
+        console.log(result);
+
+        for (var i = 0; i < result.length; i++) {
+            str += `<article>
+                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${result[i].properties.name}</h4></a>
+                                <ul>
+                                    <li>${result[i].properties.address}</li>
+                                    <li>${result[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${result[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult ${result[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${result[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${result[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${result[i].properties.mask_child}</div>
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${result[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+            maskLeftNum++;
+            addrDataArr.push(result[i]);
+        }
+        storeList.innerHTML = str; //更新左側藥局清單
+        maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+        dataFilterUpdateMap(addrDataArr);
+    }
+
+    //篩選資料後右側地圖連動
+    function dataFilterUpdateMap(data) {
+        updateMap();
+        //改變地圖中心點為數據第一筆
+        // console.log(data[0].properties.name);
+        // console.log(data[0].geometry.coordinates);
+        map.panTo(new L.LatLng(data[0].geometry.coordinates[1], data[0].geometry.coordinates[0]));
+    }
+
+    function clickChangeCenter(element) {
+        var lat,lon;
+        var index = element.getAttribute('index');
+        lat = addrDataArr[index].geometry.coordinates[1];
+        lon = addrDataArr[index].geometry.coordinates[0];
+        //移動地圖中心點
+        // map.panTo(new L.LatLng(addrDataArr[index].geometry.coordinates[1], addrDataArr[index].geometry.coordinates[0]));
+        //移動地圖中心點，改變縮放級別
+        map.setView(new L.LatLng(lat, lon), 25);
+    }
+
+
+    // function updateMarker(lat, lon) {
+    //     L.marker([lat, lon], {icon: redIcon}).addTo(map)
+    //         .bindPopup('<h1>你的位置</h1>')
+    //         .openPopup();
+    // }
+
+    var adultBtn = document.getElementById('btn__adultMask');
+    var childBtn = document.getElementById('btn__childMask');
+    var alldBtn = document.getElementById('btn__allMask');
+
+    adultBtn.onclick = filterMaskAdult;
+    childBtn.onclick = filterMaskChild;
+    alldBtn.onclick = filterMaskAll;
+
+    //篩選成人、兒童口罩
+    function filterMaskAdult() {
+        var storeList = document.getElementById('storeList');
+        var maskLeftTitle = document.getElementById('maskLeftTitle');
+        var maskLeftNum = 0;
+        var str = '';
+
+        for (var i = 0; i < addrDataArr.length; i++) {
+            if (addrDataArr[i].properties.mask_adult !== 0) {
+                str += `<article>
+                            <h4>${addrDataArr[i].properties.name}</h4>
+                                <ul>
+                                    <li>${addrDataArr[i].properties.address}</li>
+                                    <li>${addrDataArr[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${addrDataArr[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+                maskLeftNum++;
+            }
+        }
+        storeList.innerHTML = str; //更新左側藥局清單
+        maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    }
+    function filterMaskChild() {
+        var storeList = document.getElementById('storeList');
+        var maskLeftTitle = document.getElementById('maskLeftTitle');
+        var maskLeftNum = 0;
+        var str = '';
+
+        for (var i = 0; i < addrDataArr.length; i++) {
+            if (addrDataArr[i].properties.mask_child !== 0) {
+                str += `<article>
+                            <h4>${addrDataArr[i].properties.name}</h4>
+                                <ul>
+                                    <li>${addrDataArr[i].properties.address}</li>
+                                    <li>${addrDataArr[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${addrDataArr[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+                maskLeftNum++;
+            }
+        }
+        storeList.innerHTML = str; //更新左側藥局清單
+        maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    }
+    function filterMaskAll() {
+        var storeList = document.getElementById('storeList');
+        var maskLeftTitle = document.getElementById('maskLeftTitle');
+        var maskLeftNum = 0;
+        var str = '';
+
+        for (var i = 0; i < addrDataArr.length; i++) {
+            str += `<article>
+                            <h4>${addrDataArr[i].properties.name}</h4>
+                                <ul>
+                                    <li>${addrDataArr[i].properties.address}</li>
+                                    <li>${addrDataArr[i].properties.phone}</li>
+                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
+                                </ul>
+                            <div class="sidebar__maskNum">
+                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
+                            </div>
+                            <span class="sidebar__updateTime">
+                                ${addrDataArr[i].properties.updated} 更新
+                            </span>
+                                  </article>`;
+            maskLeftNum++;
+        }
+        storeList.innerHTML = str; //更新左側藥局清單
+        maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    }
+
+    //接著要做：
+    //
+    /*
+     * bug:
+     * 1.地址中有「台」跟「臺」，要想該怎麼解決，還是用兩個字串判斷兩次？（已解決）
+     * 2.篩選之後同樣的資料很多都變兩筆，是因為最後那個concat嗎？
+     * 3.xhr回傳後才能篩選，不然會故障
+     */
+</script>
 </body>
 </html>
