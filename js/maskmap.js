@@ -114,8 +114,6 @@ onload = function () {
             temp_keyword1 = temp_keyword.replace('台', '臺');
         } else if(temp_keyword.indexOf('臺') >= 0) {
             temp_keyword1 = temp_keyword.replace('臺', '台');
-        }else{
-            temp_keyword1 = [];
         }
         var keywords = [temp_keyword, temp_keyword1];
         updateMaskList(keywords);
