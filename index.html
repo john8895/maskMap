@@ -2,13 +2,15 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>口罩即時地圖</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
+    <title>Mask Map practice-3</title>
+    <!--    leaflet-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <!--    markerCluster-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"></link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"></link>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <aside class="sidebar">
@@ -29,10 +31,9 @@
         <div class="sidebar__nowLocation">
             <h3>選擇你的位置</h3>
 
-                <div class="from-group">
-                    <div role="tw-city-selector" id="citySelector"></div>
-                    <input type="button" value="送出" id="citySelectorBtn">
-                </div>
+            <div class="from-group">
+                <div role="tw-city-selector" id="citySelector"></div>
+            </div>
 
         </div>
         <hr>
@@ -43,15 +44,15 @@
         </div>
     </header>
     <main>
-        <h2 class="maskMap-title" id="maskMapTitle">尚有庫存店家 共 <span>1</span> 筆</h2>
+        <h2 class="maskMap-title" id="maskMapTitle">尚有庫存店家 共 <span id="maskLeftTitle">0</span> 筆</h2>
         <div class="sidebar__store" id="storeList">
         </div>
     </main>
 </aside>
 <div id="map"></div>
+
 <!--行政區插件-->
 <script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
-<!--<script src="http://maps.google.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&sensor=false"></script>-->
-<script src="js/all.js"></script>
+<script src="js/maskmap.js"></script>
 </body>
 </html>

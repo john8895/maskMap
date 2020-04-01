@@ -5,13 +5,51 @@
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="" />
 =======
     <list default="true" id="18698fad-cf77-4e7b-9e81-f4f0dbf3ecbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/test-view.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/0217-01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/0219-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/0329-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI 2020-02-09 142838.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/0216-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/0217-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/0219-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/14.閉包.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/John_maskMap.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/UI img/banner.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/UI img/banner_announce_fix.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/UI img/banner_announce_fix@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/UI img/banner_announce_fix@2x.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/buyMaskRule.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/css/sass/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/css/sass/style.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/css/style.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/filter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/gmap0208-01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/google-map.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/img/banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/js/all.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/js/test-view.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/maskMap2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/psd/註解 2020-02-15 125724.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/test-json.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/test-map.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/test0216.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/口罩地圖 功能規劃.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gb/詢問 2020-02-14 130638.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/css/sass/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scss/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/css/sass/style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css.map" afterDir="false" />
     </list>
+<<<<<<< HEAD
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
 >>>>>>> 500390bfd1e5d469bb68e2cd4265b963f9d92cb6
+=======
+>>>>>>> a84a358b6ee51ab55710d4743a70f4635bb8f884
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,24 +89,19 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+<<<<<<< HEAD
     <property name="settings.editor.selected.configurable" value="editing.templates" />
+=======
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+>>>>>>> a84a358b6ee51ab55710d4743a70f4635bb8f884
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Github\maskMap\css" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Github\maskMap" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="maskMap.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maskMap/maskMap.html" useBuiltInWebServerPort="true">
@@ -106,8 +139,14 @@
       <workItem from="1582173362323" duration="1787000" />
 =======
       <workItem from="1582122865018" duration="1198000" />
+<<<<<<< HEAD
       <workItem from="1582583406128" duration="301000" />
 >>>>>>> 500390bfd1e5d469bb68e2cd4265b963f9d92cb6
+=======
+      <workItem from="1582583406128" duration="1400000" />
+      <workItem from="1585444318469" duration="7098000" />
+      <workItem from="1585694886220" duration="938000" />
+>>>>>>> a84a358b6ee51ab55710d4743a70f4635bb8f884
     </task>
     <servers />
   </component>
@@ -131,6 +170,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+<<<<<<< HEAD
     <state x="529" y="397" key="#com.intellij.codeInsight.template.impl.EditVariableDialog" timestamp="1582173476516">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -139,5 +179,12 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="186" y="186" width="1253" height="715" key="SettingsEditor/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1582173531156" />
+=======
+    <state x="186" y="207" key="SettingsEditor" timestamp="1585694933414">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="186" y="207" key="SettingsEditor/-1024.-39.1024.1280/0.0.1920.1200@0.0.1920.1200" timestamp="1585694933414" />
+    <state x="186" y="186" key="SettingsEditor/-1080.-572.1080.1920/0.0.1920.1080@0.0.1920.1080" timestamp="1581553300487" />
+>>>>>>> a84a358b6ee51ab55710d4743a70f4635bb8f884
   </component>
 </project>
