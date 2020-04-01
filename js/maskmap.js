@@ -2,13 +2,8 @@
  * -------------------
  * 待辦事項 ＆ bug
  * -------------------
- * 1.地區篩選導致資料會重複，該如何解決？
- * 2.在JSON數據回傳前顯示「讀取中」動畫，以免還未完成讀取就操作，造成錯誤。
- *
- *
- *
- *
- *
+ * 在JSON數據回傳前顯示「讀取中」動畫，以免還未完成讀取就操作，造成錯誤。
+ * 
  */
 
 
@@ -22,12 +17,20 @@ var map = L.map('map', {
     zoom: 16
 });
 
-//引入圖專
+/*
+ * -------------------
+ * 引入圖專
+ * -------------------
+ */
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-//圖示
+/*
+ * -------------------
+ * 圖示
+ * -------------------
+ */
 var greyIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -69,7 +72,11 @@ xhr.onload = function () {
     updateMap();
 };
 
-//新增圖層，marker群組
+/*
+ * -------------------
+ * 新增圖層，marker群組
+ * -------------------
+ */
 var markers = new L.MarkerClusterGroup().addTo(map);
 
 //迴圈取得資料，並更新在右側地圖上
@@ -136,14 +143,7 @@ function updateMaskList(keywords) {
         })
     });
 
-    console.log(result_temp[0]);
-    console.log(result_temp[1].length);
-
-    //如果兩筆篩選結果長度一樣，就不合併；否則合併。
-    // var result = result_temp[0].length !== result_temp[1].length ? result_temp[0].concat(result_temp[1]) :result_temp[0];
     var result = result_temp[0].concat(result_temp[1]);
-
-    console.log(result);
 
     //循環輸出結果
     for (var i = 0; i < result.length; i++) {
@@ -167,24 +167,13 @@ function updateMaskList(keywords) {
     }
     storeList.innerHTML = str; //更新左側藥局清單
     maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
-    dataFilterUpdateMap(addrDataArr);
-}
-
-/*
- * -------------------
- * 篩選資料後右側地圖連動
- * -------------------
- */
-function dataFilterUpdateMap(data) {
-    updateMap();
     //改變地圖中心點為數據第一筆
-    // console.log(data[0].properties.name);
-    // console.log(data[0].geometry.coordinates);
-    map.panTo(new L.LatLng(data[0].geometry.coordinates[1], data[0].geometry.coordinates[0]));
+    //map.panTo(new L.LatLng(addrDataArr[0].geometry.coordinates[1], addrDataArr[0].geometry.coordinates[0]));
 }
 
 /*
  * -------------------
+ * 篩選地址，點選左側店家名稱
  * 移動地圖中心點 / 改變縮放級別
  * -------------------
  */
@@ -222,7 +211,7 @@ function filterMaskAdult() {
     for (var i = 0; i < addrDataArr.length; i++) {
         if (addrDataArr[i].properties.mask_adult !== 0) {
             str += `<article>
-                            <h4>${addrDataArr[i].properties.name}</h4>
+                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
                                 <ul>
                                     <li>${addrDataArr[i].properties.address}</li>
                                     <li>${addrDataArr[i].properties.phone}</li>
@@ -253,7 +242,7 @@ function filterMaskChild() {
     for (var i = 0; i < addrDataArr.length; i++) {
         if (addrDataArr[i].properties.mask_child !== 0) {
             str += `<article>
-                            <h4>${addrDataArr[i].properties.name}</h4>
+                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
                                 <ul>
                                     <li>${addrDataArr[i].properties.address}</li>
                                     <li>${addrDataArr[i].properties.phone}</li>
@@ -282,7 +271,7 @@ function filterMaskAll() {
 
     for (var i = 0; i < addrDataArr.length; i++) {
         str += `<article>
-                            <h4>${addrDataArr[i].properties.name}</h4>
+                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
                                 <ul>
                                     <li>${addrDataArr[i].properties.address}</li>
                                     <li>${addrDataArr[i].properties.phone}</li>
@@ -301,4 +290,3 @@ function filterMaskAll() {
     storeList.innerHTML = str; //更新左側藥局清單
     maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
 }
-
