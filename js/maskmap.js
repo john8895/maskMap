@@ -72,6 +72,15 @@ xhr.onload = function () {
     updateMap();
 };
 
+// 偵測使用者定位，再產生地圖
+navigator.geolocation.getCurrentPosition(getPosition);
+function getPosition(position) {
+    let myLocation = [position.coords.latitude, position.coords.longitude];
+    console.log(myLocation);
+    map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 25);
+    // getMap(myLocation);
+}
+
 /*
  * -------------------
  * 新增圖層，marker群組

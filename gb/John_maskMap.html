@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>John's Mask Map</title>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    var data = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012203",
+                    "name": "博荃藥局",
+                    "phone": "02 -27316736",
+                    "address": "台北市松山區敦化北路4巷51號",
+                    "mask_adult": 0,
+                    "mask_child": 30,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
+                    "note": "如遇國定連續假期,藥局公休",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.544742,
+                        25.050063
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012383",
+                    "name": "德川中西藥局",
+                    "phone": "02 -27683399",
+                    "address": "台北市松山區八德路4段96號",
+                    "mask_adult": 2,
+                    "mask_child": 46,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午休診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午休診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上休診、星期日晚上休診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.56066,
+                        25.04836
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012409",
+                    "name": "家音藥局",
+                    "phone": "02 -37652080",
+                    "address": "台北市松山區民生東路5段73號",
+                    "mask_adult": 196,
+                    "mask_child": 51,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "早上9:00到晚上11:00",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.558489,
+                        25.058709
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012454",
+                    "name": "敦北藥局",
+                    "phone": "02 -27155691",
+                    "address": "台北市松山區民生東路4段80巷5號",
+                    "mask_adult": 0,
+                    "mask_child": 6,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.553125,
+                        25.057129
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012490",
+                    "name": "中美藥局",
+                    "phone": "02 -27627468",
+                    "address": "台北市松山區富錦街531號",
+                    "mask_adult": 0,
+                    "mask_child": 13,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午看診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午看診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上看診",
+                    "note": "營業時間如有異動,以藥局公告為準",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.565481,
+                        25.061285
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "5901012507",
+                    "name": "康麗藥局",
+                    "phone": "02 -27174117",
+                    "address": "台北市松山區南京東路3段303巷20號",
+                    "mask_adult": 0,
+                    "mask_child": 6,
+                    "updated": "2020\/02\/09 14:36:40",
+                    "available": "星期一上午看診、星期二上午看診、星期三上午看診、星期四上午看診、星期五上午看診、星期六上午看診、星期日上午休診、星期一下午看診、星期二下午看診、星期三下午看診、星期四下午看診、星期五下午看診、星期六下午看診、星期日下午休診、星期一晚上看診、星期二晚上看診、星期三晚上看診、星期四晚上看診、星期五晚上看診、星期六晚上看診、星期日晚上休診",
+                    "note": "春節營業時間請電洽",
+                    "custom_note": "",
+                    "website": ""
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        121.546826,
+                        25.05369
+                    ]
+                }
+            }
+        ]
+    };
+
+    function initMap() {
+        var myLatLng = {lat: 25.053144, lng: 121.544704};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: myLatLng,
+        });
+
+
+        // 讀出資料
+        for (var i = 0; i < data.features.length; i++) {
+            var str = {};
+            var place = {};
+
+            place.lat = data.features[i].geometry.coordinates[1];
+            place.lng = data.features[i].geometry.coordinates[0];
+            //
+            str.position = place;
+            str.map = map;
+            str.title = data.features[i].properties.name;
+            var marker = new google.maps.Marker(str);
+            //
+            // console.log(marker);
+
+            var infowindow = null;
+            infowindow = new google.maps.InfoWindow({
+                content: '<div><div class="map__info-title">' + str.title + '</div><em>2020/02/08 23:35 更新</em></div>'
+            });
+            console.log(infowindow);
+
+
+            google.maps.event.addListener(marker, 'click', function () {
+// where I have added .html to the marker object.
+//                 infowindow.setContent(this.html);
+
+                // return function () {
+                    infowindow.open(map, this);
+                // }
+            });
+            // marker.addListener('click', function () {
+            //     infowindow.open(map, marker);
+            // })
+        }
+
+    }
+
+    //錯誤 未使用閉包
+    // for (var i = 0; i < markers.length; i++) {
+    //     var marker = markers[i];
+    //     var infowindow = new google.maps.InfoWindow({
+    //         content: "holding..."
+    //     });
+    //
+    //     google.maps.event.addListener(marker, 'click', function () {
+    //         infowindow.open(map, maker);
+    //     });
+    // }
+
+    //     var infowindow = null;
+    //     /* now inside your initialise function */
+    //     infowindow = new google.maps.InfoWindow({
+    //         content: "holding..."
+    //     });
+    //
+    //     for (var i = 0; i < markers.length; i++) {
+    //         var marker = markers[i];
+    //         google.maps.event.addListener(marker, 'click', function () {
+    // // where I have added .html to the marker object.
+    //             infowindow.setContent(this.html);
+    //             infowindow.open(map, this);
+    //         });
+    //     }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRrHgOnpuZ7v6YDdbx-yAp1ib0RA0tP00&callback=initMap"
+        async defer></script>
+</body>
+</html>
