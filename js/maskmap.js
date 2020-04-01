@@ -73,9 +73,9 @@ xhr.onload = function () {
 var markers = new L.MarkerClusterGroup().addTo(map);
 
 //迴圈取得資料，並更新在右側地圖上
-function updateMap(filterData) {
+function updateMap() {
     map.removeLayer(markers);  //一開始先移除marker
-    data = filterData?filterData:data;
+
     for (var i = 0; i < data.length; i++) {
         //判斷有無口罩，無就給灰色圖示
         var iconColor = data[i].properties.mask_adult === 0 ? greyIcon : blueIcon;
@@ -84,7 +84,7 @@ function updateMap(filterData) {
             L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]],
                 {icon: iconColor})
                 .bindPopup(`
-                        <div>${data[i].properties.name}123</div>
+                        <div>${data[i].properties.name}</div>
                         <hr>
                         <ul>
                             <li>成人：${data[i].properties.mask_adult}</li>
@@ -169,7 +169,7 @@ function updateMaskList(keywords) {
     }
     storeList.innerHTML = str; //更新左側藥局清單
     maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
-    dataFilterUpdateMap(result);
+    dataFilterUpdateMap(addrDataArr);
 }
 
 /*
@@ -178,8 +178,7 @@ function updateMaskList(keywords) {
  * -------------------
  */
 function dataFilterUpdateMap(data) {
-    var filterData = data;
-    updateMap(filterData);
+    updateMap();
     //改變地圖中心點為數據第一筆
     // console.log(data[0].properties.name);
     // console.log(data[0].geometry.coordinates);
