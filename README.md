@@ -1,10 +1,11 @@
-﻿## 口罩即時地圖
+﻿## 口罩供需地圖
 ----
-網址：<a href="https://john8895.github.io/maskmap/" target="_blank">https://john8895.github.io/maskmap/</a>
-----
-作者：陳政翰〔阿翰〕
 
-作者網站：
+網址：<a href="https://john8895.github.io/maskmap/" target="_blank">https://john8895.github.io/maskmap/</a>
+
+----
+
+作者：陳政翰〔阿翰〕
 
 設計目的：串接健保署的口罩剩餘數量 API，將資料以地圖座標方式呈現，讓使用者可以找到自己附近仍有剩餘口罩的藥局，以便用最短的時間買到口罩。
 

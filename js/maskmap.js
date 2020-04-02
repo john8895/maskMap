@@ -226,7 +226,6 @@ function updateMaskList(keywords) {
                             </div>
                                   </article>`;
         maskLeftNum++; //口罩剩餘數量計數
-        // addrDataArr.push(result[i]);
     }
     addrDataArr = result;
     storeList.innerHTML = str; //更新左側藥局清單
