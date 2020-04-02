@@ -7,6 +7,8 @@ html(lang='zh-Hant')
         link(href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css')
         link(href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css')
         link(rel='stylesheet', href='https://unpkg.com/leaflet@1.6.0/dist/leaflet.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/fontawesome.min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css')
         link(rel='stylesheet', href='css/style.css')
     body
         #progressLoading.index__loadingScreen
@@ -51,12 +53,22 @@ html(lang='zh-Hant')
         .index__mapWrap
             aside.sidebar
                 header.sidebar__header
-                    h1 口罩即時地圖
+                    h1
+                        i.fas.fa-map-marked-alt
+                        |
+                        | 口罩供需地圖
                     .sidebar__source
-                        em
-                            | 資料來源：
-                            a(href='https://www.nhi.gov.tw/',target='_blank',title='衛生福利部中央健康保險署')
-                                | 衛生福利部中央健康保險署
+                        ul
+                            li
+                                em
+                                    | 資料來源：
+                                    a(href='https://www.nhi.gov.tw/',target='_blank',title='衛生福利部中央健康保險署')
+                                        | 衛生福利部中央健康保險署
+                            li
+                                em
+                                    | 更新時間：
+                                    span#updateTime
+
                         span#todayDate.sidebar__today
                     hr
                     //- #whoCanBuy.banner
@@ -65,17 +77,17 @@ html(lang='zh-Hant')
                     //    input#address(type='text', value='', placeholder='現在位置', onclick='codeAddress()')
                     //    input(type='button', value='搜尋')
                     .sidebar__nowLocation
-                        h3.usage-step 1. 選擇你的位置
+                        h3.usage-step 選擇你的位置
                         .from-group
                             #citySelector(role='tw-city-selector')
-                    hr
-                    h3.usage-step 2. 篩選想要的口罩
-                    #fliterMask.sidebar__maskFilter
-                        input#btn__allMask(type='button', value='所有口罩')
-                        input#btn__adultMask(type='button', value='成人口罩')
-                        input#btn__childMask(type='button', value='兒童口罩')
+                    #silder__maskFilterBlock.silder__maskFilterBlock
+                        h3.usage-step 篩選想要的口罩
+                        #fliterMask.sidebar__maskFilter
+                            input#btn__allMask(type='button', value='所有口罩')
+                            input#btn__adultMask(type='button', value='成人口罩')
+                            input#btn__childMask(type='button', value='兒童口罩')
                 main
-                    hr.mt-4
+                    hr.mt-3
                     h2#maskMapTitle.maskMap-title
                         //-| 尚有庫存店家 共
                         span#maskLeftTitle
@@ -93,7 +105,7 @@ html(lang='zh-Hant')
         script(type='text/javascript',src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
         script(type='text/javascript',src='js/loaders.css.js')
         script(type='text/javascript').
-            $(document).ready(function () {
+            // $(document).ready(function () {
                 // $('#noticeBtn').trigger('click');
-            })
+            // })
             $('.loader-inner').loaders();

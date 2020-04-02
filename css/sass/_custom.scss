@@ -24,42 +24,69 @@ img {
     height: auto;
 }
 
+/*
+ * Leaflet Map
+ * -----------------------
+ */
+.leaflet-container a.leaflet-popup-close-button {
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    color: #474747;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    &:hover {
+        background-color: red;
+        color: #fff;
+    }
+}
+/*
+ * Custom
+ * -----------------------
+ */
 .index__mapWrap {
     display: flex;
 }
 
 #map {
     height: 100vh;
-    //width: calc(100% - 360px);
     overflow: hidden;
-    //float: right;
     width: 100%;
 }
 
 .sidebar {
-    min-width: 320px;
-    //height: 100%;
+    width: 440px;
     background-color: #F7F7F7;
-    padding: 20px;
-    //position: fixed;
-    //left: 0;
-    //top: 0;
-    //bottom: 0;
+    padding: 8px 10px 8px;
+    box-shadow: 0px -1px 8px rgba(0, 0, 0, 0.27);
+    z-index: 999;
 }
 
 .sidebar__header {
     h1 {
-        font-size: 24px;
-        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+        margin: 15px 0 3px;
+        i {
+            margin-right: 5px;
+        }
     }
 
     .sidebar__source {
         color: grey;
-        text-align: right;
+        text-align: center;
+        li {
+            margin-bottom: -5px;
+        }
 
         em {
-            font-style: normal;
             font-size: 12px;
+            font-family: "Microsoft JhengHei";
+        }
+        a {
+            color: #247dc9;
+            text-decoration: underline;
         }
 
         .sidebar__today {
@@ -100,23 +127,34 @@ img {
     }
 }
 
+.silder__maskFilterBlock {
+    display: none;
+    &.on {
+        display: block;
+        text-align: center;
+    }
+}
+
 .sidebar__maskFilter {
-    margin-top: 20px;
+    margin-top: 11px;
     display: flex;
     justify-content: space-evenly;
 
     input {
-        padding: 5px 7px;
+        padding: 5px 0;
         font-size: 15px;
         border-radius: 12px;
         background-color: #fff;
         border: 1px solid #ddd;
         text-shadow: none;
         color: #7d7b7b;
+        min-width: 83px;
+        outline: none;
+        cursor: pointer;
 
-        &:not(:last-child) {
-            margin-right: 10px;
-        }
+        //&:not(:last-child) {
+        //    margin-right: 10px;
+        //}
 
         &.active {
             background-color: #EF8900;
@@ -128,29 +166,41 @@ img {
 .maskMap-title {
     font-size: 17px;
     line-height: 2;
+    text-align: center;
 }
-
+/* 側邊 尚有庫存店家
+ * ----------------------
+ */
 .sidebar__store {
     overflow-y: auto;
-    max-height: calc(100vh - 400px);
+    max-height: calc(100vh - 360px);
     padding: 0 6px 0 0;
 
     article {
         margin-top: 10px;
         background-color: #ffffff;
-        border-radius: 30px;
-        padding: 23px 20px 30px;
+        border-radius: 10px;
+        padding: 9px 15px 10px;
 
         h4 {
-            font-size: 19px;
+            font-size: 18px;
             line-height: 1.7;
         }
 
-        ul {
+        ul.sidebar__itemInfo {
             margin-bottom: 10px;
 
             li {
                 line-height: 1.8;
+                font-size: 14px;
+            }
+            i {
+                width: 16px;
+                margin-right: 3px;
+                color: #767676;
+            }
+            a {
+                color: #767676;
             }
         }
     }
@@ -162,11 +212,23 @@ img {
 
     .mask-type {
         text-align: center;
-        padding: 5px;
-        background-color: #00C4C3;
+        padding: 3px;
+        //background-color: #00C4C3;
         border-radius: 16px;
         color: #fff;
         width: 100%;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
+
+        &.mask-adult:not(.noMask) {
+            background-color: #00C4C3;
+            border: 1px solid #00a7a6;
+        }
+
+        &.mask-child:not(.noMask) {
+            background-color: #FFDD57;
+            color: #000;
+            border: 1px solid #ccad33;
+        }
 
         &:first-child {
             margin-right: 5px;
@@ -179,6 +241,9 @@ img {
 
     .noMask {
         background-color: #ccc;
+        border: 1px solid #aeaeae;
+        color: #5d5d5d;
+
     }
 
     &.map__maskNum {
@@ -189,7 +254,8 @@ img {
 }
 
 .sidebar__nowLocation {
-    margin: 10px 0 20px;
+    margin: 19px 0 20px;
+    text-align: center;
 }
 
 .from-group {
@@ -197,8 +263,18 @@ img {
 
     select {
         line-height: 2;
-        font-size: 17px;
+        font-size: 15px;
         padding: 5px;
+        border-radius: 16px;
+    }
+}
+
+#citySelector {
+    select {
+        outline: none;
+        &:first-child {
+            margin-right: 5px;
+        }
     }
 }
 
@@ -207,11 +283,12 @@ img {
 }
 
 .sidebar__updateTime {
-    font-size: 14px;
-    color: #cccccc;
-    line-height: 3;
-    text-align: right;
+    font-size: 13px;
+    color: #8f8f8f;
+    text-align: center;
     display: block;
+    margin-top: 15px;
+    display: none;
 }
 
 .marker-cluster-small {
@@ -262,10 +339,10 @@ img {
     height: 30px;
 }
 
-.leaflet-popup-content h3 {
-    font-size: 20px;
-    line-height: 1;
-}
+//.leaflet-popup-content h3 {
+//    font-size: 20px;
+//    line-height: 1;
+//}
 
 .map__maskNum {
     div {
@@ -305,6 +382,7 @@ img {
     .loader-inner {
         margin: auto;
     }
+
     h3 {
         margin-top: 30px;
         color: #fff;
@@ -312,22 +390,79 @@ img {
         font-weight: normal;
         line-height: 1.8;
     }
+
     a {
         color: #fff;
     }
 }
+
 .noticeBox {
     .modal-body {
         h4 {
             margin-bottom: 10px;
             text-align: center;
         }
+
         ul {
             margin-left: 20px;
         }
+
         li {
             line-height: 1.8;
             margin-bottom: 8px;
         }
+    }
+}
+
+/*
+ * map__item
+ * ----------------------
+ */
+.map__item__wrap {
+    width: 260px;
+    font-size: 15px;
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 6px;
+        margin-left: 20px;
+    }
+
+    ul.map__item-info {
+        margin-bottom: 8px;
+
+        hr {
+            margin: 7px 0 8px;
+            border-top: 1px solid #d1d1d1;
+        }
+
+        li {
+            line-height: 1.8;
+
+            a {
+                color: #005cbf;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        i {
+            width: 16px;
+            margin-right: 3px;
+            color: #706d6d;
+        }
+    }
+
+    .map__item__maskNum {
+
+    }
+}
+
+.map__yourPosition {
+    h3 {
+        font-size: 16px;
+        line-height: 1;
     }
 }

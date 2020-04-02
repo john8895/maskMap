@@ -9043,6 +9043,28 @@ img {
   height: auto;
 }
 
+/*
+ * Leaflet Map
+ * -----------------------
+ */
+.leaflet-container a.leaflet-popup-close-button {
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  color: #474747;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+.leaflet-container a.leaflet-popup-close-button:hover {
+  background-color: red;
+  color: #fff;
+}
+
+/*
+ * Custom
+ * -----------------------
+ */
 .index__mapWrap {
   display: flex;
 }
@@ -9054,22 +9076,35 @@ img {
 }
 
 .sidebar {
-  min-width: 320px;
+  width: 440px;
   background-color: #F7F7F7;
-  padding: 20px;
+  padding: 8px 10px 8px;
+  box-shadow: 0px -1px 8px rgba(0, 0, 0, 0.27);
+  z-index: 999;
 }
 
 .sidebar__header h1 {
-  font-size: 24px;
-  margin-bottom: 15px;
+  font-size: 20px;
+  text-align: center;
+  margin: 15px 0 3px;
+}
+.sidebar__header h1 i {
+  margin-right: 5px;
 }
 .sidebar__header .sidebar__source {
   color: grey;
-  text-align: right;
+  text-align: center;
+}
+.sidebar__header .sidebar__source li {
+  margin-bottom: -5px;
 }
 .sidebar__header .sidebar__source em {
-  font-style: normal;
   font-size: 12px;
+  font-family: "Microsoft JhengHei";
+}
+.sidebar__header .sidebar__source a {
+  color: #247dc9;
+  text-decoration: underline;
 }
 .sidebar__header .sidebar__source .sidebar__today {
   display: block;
@@ -9104,22 +9139,30 @@ img {
   font-weight: bold;
 }
 
+.silder__maskFilterBlock {
+  display: none;
+}
+.silder__maskFilterBlock.on {
+  display: block;
+  text-align: center;
+}
+
 .sidebar__maskFilter {
-  margin-top: 20px;
+  margin-top: 11px;
   display: flex;
   justify-content: space-evenly;
 }
 .sidebar__maskFilter input {
-  padding: 5px 7px;
+  padding: 5px 0;
   font-size: 15px;
   border-radius: 12px;
   background-color: #fff;
   border: 1px solid #ddd;
   text-shadow: none;
   color: #7d7b7b;
-}
-.sidebar__maskFilter input:not(:last-child) {
-  margin-right: 10px;
+  min-width: 83px;
+  outline: none;
+  cursor: pointer;
 }
 .sidebar__maskFilter input.active {
   background-color: #EF8900;
@@ -9129,28 +9172,41 @@ img {
 .maskMap-title {
   font-size: 17px;
   line-height: 2;
+  text-align: center;
 }
 
+/* 側邊 尚有庫存店家
+ * ----------------------
+ */
 .sidebar__store {
   overflow-y: auto;
-  max-height: calc(100vh - 400px);
+  max-height: calc(100vh - 360px);
   padding: 0 6px 0 0;
 }
 .sidebar__store article {
   margin-top: 10px;
   background-color: #ffffff;
-  border-radius: 30px;
-  padding: 23px 20px 30px;
+  border-radius: 10px;
+  padding: 9px 15px 10px;
 }
 .sidebar__store article h4 {
-  font-size: 19px;
+  font-size: 18px;
   line-height: 1.7;
 }
-.sidebar__store article ul {
+.sidebar__store article ul.sidebar__itemInfo {
   margin-bottom: 10px;
 }
-.sidebar__store article ul li {
+.sidebar__store article ul.sidebar__itemInfo li {
   line-height: 1.8;
+  font-size: 14px;
+}
+.sidebar__store article ul.sidebar__itemInfo i {
+  width: 16px;
+  margin-right: 3px;
+  color: #767676;
+}
+.sidebar__store article ul.sidebar__itemInfo a {
+  color: #767676;
 }
 
 .sidebar__maskNum {
@@ -9159,11 +9215,20 @@ img {
 }
 .sidebar__maskNum .mask-type {
   text-align: center;
-  padding: 5px;
-  background-color: #00C4C3;
+  padding: 3px;
   border-radius: 16px;
   color: #fff;
   width: 100%;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
+}
+.sidebar__maskNum .mask-type.mask-adult:not(.noMask) {
+  background-color: #00C4C3;
+  border: 1px solid #00a7a6;
+}
+.sidebar__maskNum .mask-type.mask-child:not(.noMask) {
+  background-color: #FFDD57;
+  color: #000;
+  border: 1px solid #ccad33;
 }
 .sidebar__maskNum .mask-type:first-child {
   margin-right: 5px;
@@ -9173,13 +9238,16 @@ img {
 }
 .sidebar__maskNum .noMask {
   background-color: #ccc;
+  border: 1px solid #aeaeae;
+  color: #5d5d5d;
 }
 .sidebar__maskNum.map__maskNum .mask-type {
   padding: 2px 10px;
 }
 
 .sidebar__nowLocation {
-  margin: 10px 0 20px;
+  margin: 19px 0 20px;
+  text-align: center;
 }
 
 .from-group {
@@ -9187,8 +9255,16 @@ img {
 }
 .from-group select {
   line-height: 2;
-  font-size: 17px;
+  font-size: 15px;
   padding: 5px;
+  border-radius: 16px;
+}
+
+#citySelector select {
+  outline: none;
+}
+#citySelector select:first-child {
+  margin-right: 5px;
 }
 
 .usage-step {
@@ -9196,11 +9272,12 @@ img {
 }
 
 .sidebar__updateTime {
-  font-size: 14px;
-  color: #cccccc;
-  line-height: 3;
-  text-align: right;
+  font-size: 13px;
+  color: #8f8f8f;
+  text-align: center;
   display: block;
+  margin-top: 15px;
+  display: none;
 }
 
 .marker-cluster-small {
@@ -9243,11 +9320,6 @@ img {
 
 .map__maskNum {
   height: 30px;
-}
-
-.leaflet-popup-content h3 {
-  font-size: 20px;
-  line-height: 1;
 }
 
 .map__maskNum div {
@@ -9299,6 +9371,45 @@ img {
 .noticeBox .modal-body li {
   line-height: 1.8;
   margin-bottom: 8px;
+}
+
+/*
+ * map__item
+ * ----------------------
+ */
+.map__item__wrap {
+  width: 260px;
+  font-size: 15px;
+}
+.map__item__wrap h1 {
+  font-size: 20px;
+  margin-bottom: 6px;
+  margin-left: 20px;
+}
+.map__item__wrap ul.map__item-info {
+  margin-bottom: 8px;
+}
+.map__item__wrap ul.map__item-info hr {
+  margin: 7px 0 8px;
+  border-top: 1px solid #d1d1d1;
+}
+.map__item__wrap ul.map__item-info li {
+  line-height: 1.8;
+}
+.map__item__wrap ul.map__item-info li a {
+  color: #005cbf;
+}
+.map__item__wrap ul.map__item-info li a:hover {
+  text-decoration: underline;
+}
+.map__item__wrap ul.map__item-info i {
+  width: 16px;
+  margin-right: 3px;
+  color: #706d6d;
+}
+.map__yourPosition h3 {
+  font-size: 16px;
+  line-height: 1;
 }
 
 /**

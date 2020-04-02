@@ -67,12 +67,12 @@ xhr.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/
 xhr.send();
 
 //progress loading效果
-xhr.addEventListener('progress',function () {
+xhr.addEventListener('progress', function () {
     var loading = document.getElementById('progressLoading');
     loading.style.display = 'block';
 })
 //讀取資料
-xhr.addEventListener('load',function () {
+xhr.addEventListener('load', function () {
     var loading = document.getElementById('progressLoading');
     loading.removeAttribute('style');
     data = JSON.parse(xhr.responseText).features;
@@ -85,12 +85,19 @@ xhr.addEventListener('load',function () {
  * -------------------
  */
 navigator.geolocation.getCurrentPosition(getPosition);
+
 function getPosition(position) {
-    let myLocation = [position.coords.latitude, position.coords.longitude];
-    map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 25);
-    L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
-        .bindPopup('<h3>你的位置</h3>')
-        .openPopup();
+    // let myLocation = [position.coords.latitude, position.coords.longitude];
+    var myLat = position.coords.latitude;
+    var myLong = position.coords.longitude;
+    map.setView(new L.LatLng(myLat, myLong), 15);
+    L.marker([myLat, myLong], {icon: redIcon}).addTo(map)
+        .bindPopup(`
+                <div class="map__yourPosition">
+                    <h3>所在位置</h3>
+                </div>
+        `);
+    // .openPopup();
 }
 
 /*
@@ -102,6 +109,9 @@ var markers = new L.MarkerClusterGroup().addTo(map);
 
 //迴圈取得資料，並更新在右側地圖上
 function updateMap() {
+    var updateTime = document.getElementById('updateTime');
+    updateTime.innerText = data[0].properties.updated;
+
     map.removeLayer(markers);  //一開始先移除marker
 
     for (var i = 0; i < data.length; i++) {
@@ -112,13 +122,31 @@ function updateMap() {
             L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]],
                 {icon: iconColor})
                 .bindPopup(`
-                        <div>${data[i].properties.name}</div>
-                        <hr>
-                        <ul>
-                            <li>成人：${data[i].properties.mask_adult}</li>
-                            <li>兒童：${data[i].properties.mask_child}</li>
-                            <li>地址：${data[i].properties.address}</li>
-                        </ul>
+                        <div class="map__item__wrap">
+                            <h1>${data[i].properties.name}</h1>
+                            <ul class="map__item-info">
+                                <li>
+                                    <i class="fas fa-phone-square-alt"></i>
+                                    <a title="撥打電話(行動裝置)" href="tel:${data[i].properties.phone}">${data[i].properties.phone}</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-location-arrow"></i>
+                                    <a title="前往 Google 地圖導航" href="https://www.google.com/maps/dir/?api=1&destination=${data[i].geometry.coordinates[1]},${data[i].geometry.coordinates[0]}" target="_blank">${data[i].properties.address}</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>${data[i].properties.note}</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="sidebar__maskNum map__item__maskNum">
+                                    <div class="mask-type mask-adult ${data[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${data[i].properties.mask_adult}</div>
+                                    <div class="mask-type mask-child ${data[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${data[i].properties.mask_child}</div>
+                                </div>
+                                <span class="sidebar__updateTime">
+                                ${data[i].properties.updated} 更新
+                            </span>
+                        </div>
                 `))
     }
     map.addLayer(markers) //新增圖層到地圖
@@ -140,7 +168,7 @@ onload = function () {
         //不管輸入「臺」或「台」，都會轉出另一個台（臺），得到兩個keyword的數組
         if (temp_keyword.indexOf('台') >= 0) {
             temp_keyword1 = temp_keyword.replace('台', '臺');
-        } else if(temp_keyword.indexOf('臺') >= 0) {
+        } else if (temp_keyword.indexOf('臺') >= 0) {
             temp_keyword1 = temp_keyword.replace('臺', '台');
         }
         var keywords = [temp_keyword, temp_keyword1];
@@ -169,32 +197,42 @@ function updateMaskList(keywords) {
     //循環輸出結果
     for (var i = 0; i < result.length; i++) {
         str += `<article>
-                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${result[i].properties.name}</h4></a>
-                                <ul>
-                                    <li>${result[i].properties.address}</li>
-                                    <li>${result[i].properties.phone}</li>
+                            <h4><a title="定位地圖到此機構位置" href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}">${result[i].properties.name}</a></h4>
+                                <ul class="sidebar__itemInfo">
+                                    <li>
+                                        <i class="fas fa-map-marked-alt"></i>
+                                        <a title="連結到 Google 地圖" href="https://www.google.com/maps/place/${result[i].properties.address}" target="_blank">${result[i].properties.address}</a>
+
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-phone-square-alt"></i>
+                                        <a title="撥打電話" href="tel:${result[i].properties.phone}">${result[i].properties.phone}</a>
+                                    </li>
                     <!--                <li>今日營業時間：${result[i].properties.available}</li>-->
                                 </ul>
                             <div class="sidebar__maskNum">
                                 <div class="mask-type mask-adult ${result[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${result[i].properties.mask_adult}</div>
                                 <div class="mask-type mask-child ${result[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${result[i].properties.mask_child}</div>
                             </div>
-                            <span class="sidebar__updateTime">
-                                ${result[i].properties.updated} 更新
-                            </span>
                                   </article>`;
         maskLeftNum++; //口罩剩餘數量計數
-        addrDataArr.push(result[i]);
+        // addrDataArr.push(result[i]);
     }
+    addrDataArr = result;
     storeList.innerHTML = str; //更新左側藥局清單
     maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
     //改變地圖中心點為數據第一筆
-    var k_lat=addrDataArr[0].geometry.coordinates[1];
-    var k_long=addrDataArr[0].geometry.coordinates[0];
+    var k_lat = addrDataArr[0].geometry.coordinates[1];
+    var k_long = addrDataArr[0].geometry.coordinates[0];
     // map.panTo(new L.LatLng(k_lat, k_long));
     //移動地圖中心點，改變縮放級別
     map.setView(new L.LatLng(k_lat, k_long), 16);
-    var btnObj=document.getElementById('fliterMask').children[0];
+
+
+    var block = document.getElementById('silder__maskFilterBlock');
+    block.classList.add(addrDataArr.length !== 0 ? 'on' : '');
+
+    var btnObj = document.getElementById('fliterMask').children[0];
     btnObj.className = 'active';
 }
 
@@ -205,14 +243,14 @@ function updateMaskList(keywords) {
  * -------------------
  */
 function clickChangeCenter(element) {
-    var lat,lon;
+    var lat, lon;
     var index = element.getAttribute('index');
     lat = addrDataArr[index].geometry.coordinates[1];
     lon = addrDataArr[index].geometry.coordinates[0];
     //移動地圖中心點
-    // map.panTo(new L.LatLng(addrDataArr[index].geometry.coordinates[1], addrDataArr[index].geometry.coordinates[0]));
+    // map.panTo(new L.LatLng(lat, lon), {animate: true});
     //移動地圖中心點，改變縮放級別
-    map.setView(new L.LatLng(lat, lon), 25);
+    map.setView(new L.LatLng(lat, lon), 25, {animate: true});
 }
 
 /*
@@ -230,108 +268,92 @@ alldBtn.onclick = filterMaskAll;
 
 //篩選成人口罩
 function filterMaskAdult() {
-    var storeList = document.getElementById('storeList');
-    var maskLeftTitle = document.getElementById('maskLeftTitle');
-    var maskLeftNum = 0;
-    var str = '';
-    var btnObj=document.getElementById('fliterMask').children;
 
-    for(var i=0;i<btnObj.length;i++){
+
+    //active顯示
+    var btnObj = document.getElementById('fliterMask').children;
+    console.log(addrDataArr);
+
+
+    for (var i = 0; i < btnObj.length; i++) {
         btnObj[i].removeAttribute('class');
     }
     this.className = 'active';
-
-
-    for (var i = 0; i < addrDataArr.length; i++) {
-        if (addrDataArr[i].properties.mask_adult !== 0) {
-            str += `<article>
-                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
-                                <ul>
-                                    <li>${addrDataArr[i].properties.address}</li>
-                                    <li>${addrDataArr[i].properties.phone}</li>
-                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
-                                </ul>
-                            <div class="sidebar__maskNum">
-                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
-                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
-                            </div>
-                            <span class="sidebar__updateTime">
-                                ${addrDataArr[i].properties.updated} 更新
-                            </span>
-                                  </article>`;
-            maskLeftNum++;
-        }
-    }
-    storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
+    addrDataUpdateList('adult', addrDataArr);
 }
 
 //篩選兒童口罩
 function filterMaskChild() {
-    var storeList = document.getElementById('storeList');
-    var maskLeftTitle = document.getElementById('maskLeftTitle');
-    var maskLeftNum = 0;
-    var str = '';
-    var btnObj=document.getElementById('fliterMask').children;
-
-    for(var i=0;i<btnObj.length;i++){
+    //active顯示
+    var btnObj = document.getElementById('fliterMask').children;
+    for (var i = 0; i < btnObj.length; i++) {
         btnObj[i].removeAttribute('class');
     }
     this.className = 'active';
-
-    for (var i = 0; i < addrDataArr.length; i++) {
-        if (addrDataArr[i].properties.mask_child !== 0) {
-            str += `<article>
-                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
-                                <ul>
-                                    <li>${addrDataArr[i].properties.address}</li>
-                                    <li>${addrDataArr[i].properties.phone}</li>
-                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
-                                </ul>
-                            <div class="sidebar__maskNum">
-                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
-                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
-                            </div>
-                            <span class="sidebar__updateTime">
-                                ${addrDataArr[i].properties.updated} 更新
-                            </span>
-                                  </article>`;
-            maskLeftNum++;
-        }
-    }
-    storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
+    addrDataUpdateList('child', addrDataArr);
 }
+
 //篩選所有口罩
 function filterMaskAll() {
+    //active顯示
+    var btnObj = document.getElementById('fliterMask').children;
+    for (var i = 0; i < btnObj.length; i++) {
+        btnObj[i].removeAttribute('class');
+    }
+    this.className = 'active';
+    addrDataUpdateList('all', addrDataArr);
+}
+
+/*
+ * -------------------
+ * 篩選行政區讀取資料
+ * -------------------
+ */
+function addrDataUpdateList(filterType, dataSource) {
     var storeList = document.getElementById('storeList');
     var maskLeftTitle = document.getElementById('maskLeftTitle');
     var maskLeftNum = 0;
     var str = '';
-    var btnObj=document.getElementById('fliterMask').children;
+    var limit = 0;
+    for (var i = 0; i < dataSource.length; i++) {
+        switch (filterType) {
+            case 'adult':
+                if (dataSource[i].properties.mask_adult !== 0) {
+                    limit++;
+                    maskLeftNum++;
+                }
+                break;
+            case 'child':
+                if (dataSource[i].properties.mask_child !== 0) {
+                    limit++;
+                    maskLeftNum++;
+                }
+                break;
+            default:
+                limit++;
+                maskLeftNum++;
+        }
+        if (limit > 0) {
+            str += `<article>
+                            <h4><a title="定位地圖到此機構位置" href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}">${dataSource[i].properties.name}</a></h4>
+                                <ul class="sidebar__itemInfo">
+                                    <li>
+                                        <i class="fas fa-map-marked-alt"></i>
+                                        <a title="連結到 Google 地圖" href="https://www.google.com/maps/place/${dataSource[i].properties.address}" target="_blank">${dataSource[i].properties.address}</a>
 
-    for(var i=0;i<btnObj.length;i++){
-        btnObj[i].removeAttribute('class');
-    }
-    this.className = 'active';
-
-    for (var i = 0; i < addrDataArr.length; i++) {
-        str += `<article>
-                            <a href="" onclick="event.preventDefault();clickChangeCenter(this)" index="${i}"><h4>${addrDataArr[i].properties.name}</h4></a>
-                                <ul>
-                                    <li>${addrDataArr[i].properties.address}</li>
-                                    <li>${addrDataArr[i].properties.phone}</li>
-                    <!--                <li>今日營業時間：${addrDataArr[i].properties.available}</li>-->
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-phone-square-alt"></i>
+                                        <a title="撥打電話" href="tel:${dataSource[i].properties.phone}">${dataSource[i].properties.phone}</a>
+                                    </li>
+                    <!--                <li>今日營業時間：${dataSource[i].properties.available}</li>-->
                                 </ul>
                             <div class="sidebar__maskNum">
-                                <div class="mask-type mask-adult ${addrDataArr[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${addrDataArr[i].properties.mask_adult}</div>
-                                <div class="mask-type mask-child ${addrDataArr[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${addrDataArr[i].properties.mask_child}</div>
+                                <div class="mask-type mask-adult ${dataSource[i].properties.mask_adult === 0 ? 'noMask' : ' '} "><em>成人</em> ${dataSource[i].properties.mask_adult}</div>
+                                <div class="mask-type mask-child ${dataSource[i].properties.mask_child === 0 ? 'noMask' : ' '}"><em>兒童</em> ${dataSource[i].properties.mask_child}</div>
                             </div>
-                            <span class="sidebar__updateTime">
-                                ${addrDataArr[i].properties.updated} 更新
-                            </span>
                                   </article>`;
-        maskLeftNum++;
+        }
     }
     storeList.innerHTML = str; //更新左側藥局清單
     maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
@@ -342,6 +364,7 @@ function filterMaskAll() {
  * 取得今天日期
  * -------------------
  */
+
 // getTodat();
 function getTodat() {
     let Today = new Date();
