@@ -94,10 +94,21 @@ function getPosition(position) {
     L.marker([myLat, myLong], {icon: redIcon}).addTo(map)
         .bindPopup(`
                 <div class="map__yourPosition">
-                    <h3>所在位置</h3>
+                    <i class="far fa-grin-beam"></i>
+                    <h3>這是你所在的位置</h3>
+                    <hr>
+                    <p>圖示說明：</p>
+                    <ul class="map__yourPosition__marketReadme">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i> 還有成人口罩
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i> 成人口罩賣光了
+                        </li>
+                    </ul>
                 </div>
-        `);
-    // .openPopup();
+        `)
+    .openPopup();
 }
 
 /*
