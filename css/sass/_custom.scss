@@ -83,7 +83,7 @@ img {
         }
 
         &.on {
-            left: 353px;
+            //left: 353px;
             transition: 300ms cubic-bezier(0.46, 0.03, 0.52, 0.96);
             background-color: #f7f7f7;
             color: #313131;
@@ -93,6 +93,21 @@ img {
             border-style: solid;
             border-radius: 0 10px 10px 0;
             opacity: 1;
+            @include breakpoint(320){
+                transform: translateX(343px);
+            }
+            @include breakpoint(md){
+                transform: translateX(294px);
+            }
+            @include breakpoint(lg){
+                transform: translateX(300px);
+            }
+            @include breakpoint(1440){
+                transform: translateX(333px);
+            }
+            @include breakpoint(1600){
+                transform: translateX(343px);
+            }
             span {
                 transform: rotate(0deg);
             }
