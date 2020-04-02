@@ -87,7 +87,6 @@ xhr.addEventListener('load', function () {
 navigator.geolocation.getCurrentPosition(getPosition);
 
 function getPosition(position) {
-    // let myLocation = [position.coords.latitude, position.coords.longitude];
     var myLat = position.coords.latitude;
     var myLong = position.coords.longitude;
     map.setView(new L.LatLng(myLat, myLong), 15);
@@ -96,16 +95,16 @@ function getPosition(position) {
                 <div class="map__yourPosition">
                     <i class="far fa-grin-beam"></i>
                     <h3>這是你所在的位置</h3>
-                    <hr>
-                    <p>圖示說明：</p>
-                    <ul class="map__yourPosition__marketReadme">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i> 還有成人口罩
-                        </li>
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i> 成人口罩賣光了
-                        </li>
-                    </ul>
+<!--                    <hr>-->
+<!--                    <p>圖示說明：</p>-->
+<!--                    <ul class="map__yourPosition__marketReadme">-->
+<!--                        <li>-->
+<!--                            <i class="fas fa-map-marker-alt"></i> 還有成人口罩-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <i class="fas fa-map-marker-alt"></i> 成人口罩賣光了-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
         `)
     .openPopup();
