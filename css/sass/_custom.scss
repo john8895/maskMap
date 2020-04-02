@@ -102,6 +102,9 @@ img {
             @include breakpoint(lg){
                 transform: translateX(300px);
             }
+            @include breakpoint(xl){
+                transform: translateX(310px);
+            }
             @include breakpoint(1440){
                 transform: translateX(333px);
             }
