@@ -48,45 +48,47 @@
         </div>
       </div>
     </div>
-    <div class="index__mapWrap">
-      <aside class="sidebar">
-        <header class="sidebar__header">
-          <h1><i class="fas fa-map-marked-alt"></i>
-            口罩供需地圖
-          </h1>
-          <div class="sidebar__source">
-            <ul>
-              <li><em>資料來源：<a href="https://www.nhi.gov.tw/" target="_blank" title="衛生福利部中央健康保險署">衛生福利部中央健康保險署</a></em></li>
-              <li><em>更新時間：<span id="updateTime"></span></em></li>
-            </ul><span class="sidebar__today" id="todayDate"></span>
-          </div>
-          <hr>
-          <!--.sidebar__nowLocation-->
-          <!--    h3 現在位置-->
-          <!--    input#address(type='text', value='', placeholder='現在位置', onclick='codeAddress()')-->
-          <!--    input(type='button', value='搜尋')-->
-          <div class="sidebar__nowLocation">
-            <h3 class="usage-step">選擇你的位置</h3>
-            <div class="from-group">
-              <div id="citySelector" role="tw-city-selector"></div>
+    <div class="asideBtn-block"><a class="asideToggle on" id="asideToggleBtn"><span><i class="fas fa-angle-double-left"></i></span></a>
+      <div class="index__mapWrap">
+        <aside class="sidebar page__aside on" id="page__aside">
+          <header class="sidebar__header">
+            <h1><i class="fas fa-map-marked-alt"></i>
+              口罩供需地圖
+            </h1>
+            <div class="sidebar__source">
+              <ul>
+                <li><em>資料來源：<a href="https://www.nhi.gov.tw/" target="_blank" title="衛生福利部中央健康保險署">衛生福利部中央健康保險署</a></em></li>
+                <li><em>更新時間：<span id="updateTime"></span></em></li>
+              </ul><span class="sidebar__today" id="todayDate"></span>
             </div>
-          </div>
-          <div class="silder__maskFilterBlock" id="silder__maskFilterBlock">
-            <h3 class="usage-step">篩選想要的口罩</h3>
-            <div class="sidebar__maskFilter" id="fliterMask">
-              <input id="btn__allMask" type="button" value="所有口罩">
-              <input id="btn__adultMask" type="button" value="成人口罩">
-              <input id="btn__childMask" type="button" value="兒童口罩">
+            <hr>
+            <!--.sidebar__nowLocation-->
+            <!--    h3 現在位置-->
+            <!--    input#address(type='text', value='', placeholder='現在位置', onclick='codeAddress()')-->
+            <!--    input(type='button', value='搜尋')-->
+            <div class="sidebar__nowLocation">
+              <h3 class="usage-step">選擇你的位置</h3>
+              <div class="from-group">
+                <div id="citySelector" role="tw-city-selector"></div>
+              </div>
             </div>
-          </div>
-        </header>
-        <main>
-          <hr class="mt-3">
-          <h2 class="maskMap-title" id="maskMapTitle"><span id="maskLeftTitle"></span></h2>
-          <div class="sidebar__store" id="storeList"></div>
-        </main>
-      </aside>
-      <div id="map"></div>
+            <div class="silder__maskFilterBlock" id="silder__maskFilterBlock">
+              <h3 class="usage-step">篩選想要的口罩</h3>
+              <div class="sidebar__maskFilter" id="fliterMask">
+                <input id="btn__allMask" type="button" value="所有口罩">
+                <input id="btn__adultMask" type="button" value="成人口罩">
+                <input id="btn__childMask" type="button" value="兒童口罩">
+              </div>
+            </div>
+          </header>
+          <main>
+            <hr class="mt-3">
+            <h2 class="maskMap-title" id="maskMapTitle"><span id="maskLeftTitle"></span></h2>
+            <div class="sidebar__store" id="storeList"></div>
+          </main>
+        </aside>
+        <div id="map"></div>
+      </div>
     </div>
     <!-- leaflet-->
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -99,9 +101,12 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/loaders.css.js"></script>
     <script type="text/javascript">
-      // $(document).ready(function () {
-          // $('#noticeBtn').trigger('click');
-      // })
+      $(document).ready(function () {
+          $('#asideToggleBtn').on('click',function () {
+              $('#page__aside').toggleClass('on');
+              $('#asideToggleBtn').toggleClass('on');
+          })
+      })
       $('.loader-inner').loaders();
     </script>
   </body>

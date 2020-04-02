@@ -25,23 +25,6 @@ img {
 }
 
 /*
- * Leaflet Map
- * -----------------------
- */
-.leaflet-container a.leaflet-popup-close-button {
-    //top: 10px;
-    //right: 10px;
-    //padding: 0;
-    //color: #474747;
-    //width: 15px;
-    //height: 15px;
-    //text-align: center;
-    //&:hover {
-    //    background-color: red;
-    //    color: #fff;
-    //}
-}
-/*
  * Custom
  * -----------------------
  */
@@ -55,10 +38,96 @@ img {
     width: 100%;
 }
 
+@keyframes arrowLeftRight {
+    0% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(-10px);
+    }
+}
+
+.asideBtn-block {
+    position: relative;
+
+    .asideToggle {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 46px;
+        height: 70px;
+        text-align: center;
+        line-height: 70px;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: 0.1s ease-in-out;
+        background-color: #f7f7f7;
+        color: #313131;
+        box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.28);
+        border-width: 1px 1px 1px 0;
+        border-color: rgba(0, 0, 0, 0.25);
+        border-style: solid;
+        border-radius: 0 10px 10px 0;
+        opacity: 0.85;
+        position: fixed;
+        &:hover {
+            opacity: 1;
+        }
+        span {
+            transform: rotate(180deg) translateX(8px);
+            display: inline-block;
+        }
+        i {
+            animation: arrowLeftRight 800ms infinite alternate;
+        }
+
+        &.on {
+            left: 353px;
+            transition: 300ms cubic-bezier(0.46, 0.03, 0.52, 0.96);
+            background-color: #f7f7f7;
+            color: #313131;
+            box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.28);
+            border-width: 1px 1px 1px 0;
+            border-color: rgba(0, 0, 0, 0.25);
+            border-style: solid;
+            border-radius: 0 10px 10px 0;
+            opacity: 1;
+            span {
+                transform: rotate(0deg);
+            }
+            i {
+                animation: arrowLeftRight 800ms infinite alternate;
+            }
+        }
+    }
+}
+
+
 .sidebar {
-    width: 440px;
+    //@include breakpoint(320) {
+    width: 0;
+    transform: translateX(-100%);
+    transition: 0.3s east-in-out;
+    opacity: 0;
+    padding: 0;
+    //}
+
+    &.on {
+        width: 440px;
+        padding: 8px 10px 8px;
+        opacity: 1;
+        transition: .3s ease-in-out;
+        transform: translateX(0);
+    }
+
+    //@include breakpoint(sm) {
+    //    width: 440px;
+    //    padding: 8px 10px 8px;
+    //    opacity: 1;
+    //    transform: translateX(0);
+    //}
     background-color: #F7F7F7;
-    padding: 8px 10px 8px;
     box-shadow: 0px -1px 8px rgba(0, 0, 0, 0.27);
     z-index: 999;
 }
@@ -68,6 +137,7 @@ img {
         font-size: 20px;
         text-align: center;
         margin: 15px 0 3px;
+
         i {
             margin-right: 5px;
         }
@@ -76,6 +146,7 @@ img {
     .sidebar__source {
         color: grey;
         text-align: center;
+
         li {
             margin-bottom: -5px;
         }
@@ -84,6 +155,7 @@ img {
             font-size: 12px;
             font-family: "Microsoft JhengHei";
         }
+
         a {
             color: #247dc9;
             text-decoration: underline;
@@ -102,7 +174,6 @@ img {
 .banner {
     background-color: #ffffff;
     border-radius: 10px;
-    /* height: 130px; */
     border: 1px solid #dddddd;
     margin-top: 5px;
     padding: 10px 20px;
@@ -129,6 +200,7 @@ img {
 
 .silder__maskFilterBlock {
     display: none;
+
     &.on {
         display: block;
         text-align: center;
@@ -152,10 +224,6 @@ img {
         outline: none;
         cursor: pointer;
 
-        //&:not(:last-child) {
-        //    margin-right: 10px;
-        //}
-
         &.active {
             background-color: #EF8900;
             color: #ffffff;
@@ -168,6 +236,7 @@ img {
     line-height: 2;
     text-align: center;
 }
+
 /* 側邊 尚有庫存店家
  * ----------------------
  */
@@ -194,11 +263,13 @@ img {
                 line-height: 1.8;
                 font-size: 14px;
             }
+
             i {
                 width: 16px;
                 margin-right: 3px;
                 color: #767676;
             }
+
             a {
                 color: #767676;
             }
@@ -213,7 +284,6 @@ img {
     .mask-type {
         text-align: center;
         padding: 3px;
-        //background-color: #00C4C3;
         border-radius: 16px;
         color: #fff;
         width: 100%;
@@ -272,6 +342,7 @@ img {
 #citySelector {
     select {
         outline: none;
+
         &:first-child {
             margin-right: 5px;
         }
@@ -338,11 +409,6 @@ img {
 .map__maskNum {
     height: 30px;
 }
-
-//.leaflet-popup-content h3 {
-//    font-size: 20px;
-//    line-height: 1;
-//}
 
 .map__maskNum {
     div {
@@ -462,19 +528,23 @@ img {
 
 .map__yourPosition {
     text-align: center;
+
     p {
         text-align: left;
         margin: 0 0 9px;
     }
-    i{
+
+    i {
         font-size: 22px;
     }
+
     h3 {
         margin-top: 7px;
         font-size: 16px;
         line-height: 1;
     }
 }
+
 .map__yourPosition__marketReadme {
 
     li {
@@ -485,6 +555,7 @@ img {
         &:nth-of-type(1) {
             color: #237CC9;
         }
+
         &:nth-of-type(2) {
             color: #797979;
         }
