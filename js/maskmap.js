@@ -1,9 +1,8 @@
 /*
  * -------------------
- * 待辦事項 ＆ bug
+ * todo 待辦事項 ＆ bug
  * -------------------
- * 在JSON數據回傳前顯示「讀取中」動畫，以免還未完成讀取就操作，造成錯誤。
- *
+ * todo:選擇行政區後，右側地圖只會更新一次
  */
 
 
@@ -67,18 +66,31 @@ var xhr = new XMLHttpRequest();
 xhr.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
 xhr.send();
 
-xhr.onload = function () {
+//progress loading效果
+xhr.addEventListener('progress',function () {
+    var loading = document.getElementById('progressLoading');
+    loading.style.display = 'block';
+})
+//讀取資料
+xhr.addEventListener('load',function () {
+    var loading = document.getElementById('progressLoading');
+    loading.removeAttribute('style');
     data = JSON.parse(xhr.responseText).features;
     updateMap();
-};
+});
 
-// 偵測使用者定位，再產生地圖
+/*
+ * -------------------
+ * 偵測使用者定位，設定地圖中心點
+ * -------------------
+ */
 navigator.geolocation.getCurrentPosition(getPosition);
 function getPosition(position) {
     let myLocation = [position.coords.latitude, position.coords.longitude];
-    console.log(myLocation);
     map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 25);
-    // getMap(myLocation);
+    L.marker(myLocation ? myLocation : [25.061285, 121.565481], {icon: redIcon}).addTo(map)
+        .bindPopup('<h3>你的位置</h3>')
+        .openPopup();
 }
 
 /*
@@ -175,9 +187,15 @@ function updateMaskList(keywords) {
         addrDataArr.push(result[i]);
     }
     storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
     //改變地圖中心點為數據第一筆
-    //map.panTo(new L.LatLng(addrDataArr[0].geometry.coordinates[1], addrDataArr[0].geometry.coordinates[0]));
+    var k_lat=addrDataArr[0].geometry.coordinates[1];
+    var k_long=addrDataArr[0].geometry.coordinates[0];
+    // map.panTo(new L.LatLng(k_lat, k_long));
+    //移動地圖中心點，改變縮放級別
+    map.setView(new L.LatLng(k_lat, k_long), 16);
+    var btnObj=document.getElementById('fliterMask').children[0];
+    btnObj.className = 'active';
 }
 
 /*
@@ -216,6 +234,13 @@ function filterMaskAdult() {
     var maskLeftTitle = document.getElementById('maskLeftTitle');
     var maskLeftNum = 0;
     var str = '';
+    var btnObj=document.getElementById('fliterMask').children;
+
+    for(var i=0;i<btnObj.length;i++){
+        btnObj[i].removeAttribute('class');
+    }
+    this.className = 'active';
+
 
     for (var i = 0; i < addrDataArr.length; i++) {
         if (addrDataArr[i].properties.mask_adult !== 0) {
@@ -238,7 +263,7 @@ function filterMaskAdult() {
         }
     }
     storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
 }
 
 //篩選兒童口罩
@@ -247,6 +272,12 @@ function filterMaskChild() {
     var maskLeftTitle = document.getElementById('maskLeftTitle');
     var maskLeftNum = 0;
     var str = '';
+    var btnObj=document.getElementById('fliterMask').children;
+
+    for(var i=0;i<btnObj.length;i++){
+        btnObj[i].removeAttribute('class');
+    }
+    this.className = 'active';
 
     for (var i = 0; i < addrDataArr.length; i++) {
         if (addrDataArr[i].properties.mask_child !== 0) {
@@ -269,7 +300,7 @@ function filterMaskChild() {
         }
     }
     storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
 }
 //篩選所有口罩
 function filterMaskAll() {
@@ -277,6 +308,12 @@ function filterMaskAll() {
     var maskLeftTitle = document.getElementById('maskLeftTitle');
     var maskLeftNum = 0;
     var str = '';
+    var btnObj=document.getElementById('fliterMask').children;
+
+    for(var i=0;i<btnObj.length;i++){
+        btnObj[i].removeAttribute('class');
+    }
+    this.className = 'active';
 
     for (var i = 0; i < addrDataArr.length; i++) {
         str += `<article>
@@ -297,5 +334,31 @@ function filterMaskAll() {
         maskLeftNum++;
     }
     storeList.innerHTML = str; //更新左側藥局清單
-    maskLeftTitle.innerText = maskLeftNum; //更新 尚有庫存店家筆數
+    maskLeftTitle.innerText = `尚有庫存店家 共 ${maskLeftNum} 筆`; //更新 尚有庫存店家筆數
+}
+
+/*
+ * -------------------
+ * 取得今天日期
+ * -------------------
+ */
+// getTodat();
+function getTodat() {
+    let Today = new Date();
+    let weekDay = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    let nowWeek = weekDay[Today.getDay()];
+    let str = "";
+    if (Today.getDay() === 0) {
+        //星期日
+        str = `<h1>${nowWeek}</h1>不限身份證字號都可以買口罩`;
+    } else if (Today.getDay() % 2 === 0) {
+        //偶數
+        str = `<h1>${nowWeek}</h1>身份證<span class="id-last">最後一碼為</span><div><span class="idNum">2、4、6、8、0</span> 的人可以買口罩！</div>`;
+    } else {
+        //奇數
+        str = `<h1>${nowWeek}</h1>身份證<span class="id-last">最後一碼為</span><div><span class="idNum">1、3、5、7、9</span> 的人可以買口罩！</div>`;
+    }
+    document.getElementById('whoCanBuy').innerHTML = str;
+    let todayDate = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
+    document.getElementById('todayDate').append(todayDate);
 }

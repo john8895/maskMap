@@ -1,0 +1,99 @@
+doctype html
+html(lang='zh-Hant')
+    head
+        meta(charset='UTF-8')
+        title 口罩供需資訊平台
+        // markerCluster
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css')
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css')
+        link(rel='stylesheet', href='https://unpkg.com/leaflet@1.6.0/dist/leaflet.css')
+        link(rel='stylesheet', href='css/style.css')
+    body
+        #progressLoading.index__loadingScreen
+            .loader-inner.line-scale
+            h3
+                | 本站資料由
+                |
+                a(href='https://www.nhi.gov.tw/')
+                    | 衛生福利部中央健康保險署
+                |
+                | 提供
+                br
+                | 資料載入中，請稍待片刻…
+        .noticeBox(style='display:none')
+            button#noticeBtn.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModalLong')
+            // Modal
+            #exampleModalLong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
+                .modal-dialog(role='document')
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLongTitle.modal-title 最新消息
+                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                span(aria-hidden='true') ×
+                        .modal-body
+                            a(href='img/dm0409.jpg',target='_blank')
+                                img(src='img/dm0409.jpg',alt='')
+                            p.text-right.mt-3
+                                | 資料來源：
+                                a(href='https://www.facebook.com/TWCDC/?ref=page_internal',target='_blank')
+                                    | 疾管局 Facebook
+                            //h4 衛福部公告4/9起調整新規定:
+                            //ul
+                            //    li
+                            //        | 1.網路購買調整為一次購買「14天份口罩」，每隔14日後才能再次購買。民眾買可任選成人9片或兒童10片( 臉小的成人也可選購兒童口罩)。
+                            //    li
+                            //        | 2.至健保特約藥局排隊購買口罩，取消身份證號單雙號分流限制，改為想哪天買就哪天買。
+                            //    li
+                            //        | 3.開放寄送口罩給海外親人（限二等親以內），每兩個月可以寄送至多30片，將透過簡化報關程序加速寄送流程，同一人限寄一次，海外同一人限收一次。
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-dismiss='modal') 關閉
+
+        .index__mapWrap
+            aside.sidebar
+                header.sidebar__header
+                    h1 口罩即時地圖
+                    .sidebar__source
+                        em
+                            | 資料來源：
+                            a(href='https://www.nhi.gov.tw/',target='_blank',title='衛生福利部中央健康保險署')
+                                | 衛生福利部中央健康保險署
+                        span#todayDate.sidebar__today
+                    hr
+                    //- #whoCanBuy.banner
+                    //.sidebar__nowLocation
+                    //    h3 現在位置
+                    //    input#address(type='text', value='', placeholder='現在位置', onclick='codeAddress()')
+                    //    input(type='button', value='搜尋')
+                    .sidebar__nowLocation
+                        h3.usage-step 1. 選擇你的位置
+                        .from-group
+                            #citySelector(role='tw-city-selector')
+                    hr
+                    h3.usage-step 2. 篩選想要的口罩
+                    #fliterMask.sidebar__maskFilter
+                        input#btn__allMask(type='button', value='所有口罩')
+                        input#btn__adultMask(type='button', value='成人口罩')
+                        input#btn__childMask(type='button', value='兒童口罩')
+                main
+                    hr.mt-4
+                    h2#maskMapTitle.maskMap-title
+                        //-| 尚有庫存店家 共
+                        span#maskLeftTitle
+                        //-|  筆
+                    #storeList.sidebar__store
+            #map
+        // leaflet
+        script(src='https://unpkg.com/leaflet@1.6.0/dist/leaflet.js')
+        // markerCluster
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js')
+        // 行政區插件
+        script(type='text/javascript',src='https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js')
+        script(type='text/javascript',src='js/maskmap.js')
+        script(type='text/javascript',src='js/jquery-3.4.1.js')
+        script(type='text/javascript',src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+        script(type='text/javascript',src='js/loaders.css.js')
+        script(type='text/javascript').
+            $(document).ready(function () {
+                // $('#noticeBtn').trigger('click');
+            })
+            $('.loader-inner').loaders();
