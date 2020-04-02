@@ -16,4 +16,4 @@
 1. 點選地圖座標點上的店家地址，可連結至 Google 地圖察看更多資訊或導航。
 1. 點選店家電話，可直接撥打電話（手機裝置）。
 
-使用技術：Javascript、AJAX、SCSS
+使用技術：Pug、SCSS、Javascript、AJAX
